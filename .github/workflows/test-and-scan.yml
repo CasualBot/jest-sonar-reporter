@@ -1,0 +1,58 @@
+name: Test and Scan
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    name: Jest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - name: ckeckout
+        uses: actions/checkout@v2
+      - name: Using node version ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm run test:coverage
+      - name: Upload reports
+        uses: actions/upload-artifact@v2
+        with:
+          name: reports
+          path: reports/**
+      - name: Upload coverage
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage
+          path: coverage/**
+  sonarcloud:
+  name: Scan PR
+  runs-on: ubuntu-latest
+  needs: unit-test
+  steps:
+    - name: checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+    - name: Download reports artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: reports
+    - name: Download coverage artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: coverage
+    - name: Run SonarCloud
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
