@@ -1,0 +1,46 @@
+{
+    // "compilerOptions": {
+    //   "declaration": true,
+    //   "module": "commonjs",
+    //   "moduleResolution": "node",
+    //   "types": [
+    //     "node",
+    //     "jest",
+    //   ],
+    //   "lib": [
+    //     "es6",
+    //     "dom"
+    //   ],
+    //   "rootDir": ".",
+    //   "target": "es2015",
+    //   "outDir": "./lib",
+    //   "preserveConstEnums": true,
+    //   "removeComments": true,
+    //   "inlineSourceMap": false,
+    //   "sourceMap": false,
+    //   "typeRoots": [
+    //     "./node_modules/@types",
+    //     "./node_modules/@jest",
+    //   ]
+    // },
+    // "include": [
+    //   "src/**/*.ts", 
+    //   "index.ts"    
+    // ],
+    // "exclude": [
+    //   "node_modules",
+    //   "**/*.spec.ts"
+    // ]
+    "compilerOptions": {
+      "target": "es5",
+      "module": "commonjs",
+      "lib": ["es2015"],
+      "strict": true,
+      "declaration": true,
+      "outDir": "lib",
+      "sourceMap": false
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "**/*.spec.ts"]
+  }
+  
