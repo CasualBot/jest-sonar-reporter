@@ -1,9 +1,10 @@
 .idea/
 .sonar/
-node_modules/
+node_modules
 coverage/
 reports/
 test/
 debug.json
 *.log
 test-report.xml
+.vscode
