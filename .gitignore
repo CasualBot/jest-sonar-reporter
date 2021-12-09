@@ -8,3 +8,4 @@ debug.json
 *.log
 test-report.xml
 .vscode
+lib

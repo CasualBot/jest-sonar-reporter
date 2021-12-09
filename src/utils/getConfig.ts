@@ -1,7 +1,7 @@
 export default (json: any, env: string = 'default'): Object => {
-  const jestSonarConfig = {};
-  const envConfig = {};
-  const allEnvConfig = mapAllEnvConfig(jestSonarConfig);
+  const jestSonarConfig: any = {};
+  const envConfig: any = {};
+  const allEnvConfig: any = mapAllEnvConfig(jestSonarConfig);
 
   return Object.assign(allEnvConfig, envConfig[env])
 
@@ -12,11 +12,12 @@ export const ENV_KEY = 'env';
 export const blacklist = [ENV_KEY];
 
 
-function mapAllEnvConfig(jestSonarConfig: Object): Object {
+function mapAllEnvConfig(jestSonarConfig: any): Object {
   return Object.keys(jestSonarConfig)
-  .filter(key => !blacklist.includes(key))
-  .reduce((acc, key) => {
-    acc[key] = jestSonarConfig[key]
-    return acc
-  }, {});
+            .filter(key => !blacklist.includes(key))
+            .reduce((acc: any, key: any) => {
+              acc[key] = jestSonarConfig[key]
+              
+              return acc
+            }, {});
 }

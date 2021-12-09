@@ -1,5 +1,5 @@
 {
-  "name": "jest-sonar-reporter",
+  "name": "@casualBot/jest-sonar-reporter",
   "version": "3.0.0",
   "description": "A Sonar test reporter for Jest.",
   "keywords": [
@@ -13,7 +13,8 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -29,20 +30,20 @@
     "node": ">=16.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.0",
-    "@babel/preset-typescript": "^7.16.0",
-    "@types/jest": "^27.0.3",
-    "@types/node": "^16.11.12",
-    "@types/xml": "^1.0.6",
-    "babel-jest": "^27.4.2",
+    "@babel/core": "7.16.0",
+    "@babel/preset-typescript": "7.16.0",
+    "@types/jest": "27.0.3",
+    "@types/node": "16.11.12",
+    "@types/xml": "1.0.6",
+    "babel-jest": "27.4.2",
     "eslint": "8.4.1",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "4.0.0",
-    "jest": "^27.4.3",
+    "jest": "27.4.3",
     "prettier": "2.5.1",
-    "ts-jest": "^27.1.1",
+    "ts-jest": "27.1.1",
     "typescript": "^4.5.2",
-    "uuid": "^8.3.2"
+    "uuid": "8.3.2"
   },
   "dependencies": {
     "xml": "1.0.1"
