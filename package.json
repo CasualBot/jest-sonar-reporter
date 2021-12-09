@@ -37,7 +37,7 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "testResultsProcessor": "jest-sonar-reporter"
+    "testResultsProcessor": "index.js"
   },
   "jestSonar": {
     "reportPath": "reports",
