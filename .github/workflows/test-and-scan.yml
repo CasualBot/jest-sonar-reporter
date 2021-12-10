@@ -24,16 +24,18 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm run test:coverage
-      - name: Upload app files for coverage analysis
-        uses: actions/upload-artifact@v2
-        with:
-          name: lib
-          path: lib/**/*.js
+      # - name: Upload app files for coverage analysis
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: lib
+      #     path: lib/**/*.js
+      #     retention-days: 1
       - name: Upload coverage
         uses: actions/upload-artifact@v2
         with:
           name: coverage
           path: coverage/**
+          retention-days: 1
   sonarcloud:
     name: Scan PR
     runs-on: ubuntu-latest
@@ -53,6 +55,8 @@ jobs:
           name: lib
       - name: Run SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
+        with:
+          name: coverage
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
