@@ -1,9 +1,8 @@
 # Jest Sonar Reporter
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=CasualBot_jest-sonar-reporter&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=CasualBot_jest-sonar-reporter)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=CasualBot_jest-sonar-reporter&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=CasualBot_jest-sonar-reporter)
-[![Build](https://github.com/CasualBot/jest-sonar-reporter/actions/workflows/test-and-scan.yml/badge.svg)](https://github.com/CasualBot/jest-sonar-reporter/actions/workflows/test-and-scan.yml)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=CasualBot_jest-sonar-reporter&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=CasualBot_jest-sonar-reporter)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=CasualBot_jest-sonar-reporter&metric=coverage)](https://sonarcloud.io/summary/new_code?id=CasualBot_jest-sonar-reporter)
+[![wakatime](https://wakatime.com/badge/user/41388cf5-199b-46ef-ba4b-9d69e0dda390/project/1dc2b734-653c-4cd9-a5e1-1c2df44d609f.svg)](https://wakatime.com/badge/user/41388cf5-199b-46ef-ba4b-9d69e0dda390/project/1dc2b734-653c-4cd9-a5e1-1c2df44d609f)
 
 `@casualbot/jest-sonar-scanner` is a custom results processor for Jest derived from Christian W. original work [here](https://github.com/3dmind/jest-sonar-reporter).
 

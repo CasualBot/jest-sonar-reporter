@@ -16,7 +16,7 @@
     "test:coverage": "tsc --module commonjs && jest --coverage",
     "build": "tsc --module commonjs",
     "lint": "eslint . -c .eslintrc.js --quiet",
-    "lint:coverage": "eslint . -c .eslintrc.js -f json -o ./coverage/eslint.json"
+    "lint:coverage": "eslint . -c .eslintrc.js -f json-relative -o ./coverage/eslint.json"
   },
   "repository": {
     "type": "git",
@@ -49,6 +49,7 @@
     "babel-jest": "27.4.2",
     "eslint": "^8.4.1",
     "eslint-config-prettier": "8.3.0",
+    "eslint-formatter-json-relative": "^0.1.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jest": "^25.3.0",
     "eslint-plugin-prettier": "4.0.0",
@@ -61,7 +62,7 @@
   },
   "dependencies": {
     "mkdirp": "1.0.4",
-    "xml": "1.0.1",
-    "uuid": "8.3.2"
+    "uuid": "8.3.2",
+    "xml": "1.0.1"
   }
 }

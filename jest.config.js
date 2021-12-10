@@ -32,8 +32,8 @@ module.exports = {
         '.',
         {
           relativePaths: true,
-          outputName: 'sonar-report.xml',
-          outputPath: 'coverage',
+          outputName: 'jest-sonar.xml',
+          outputDirectory: 'coverage/',
         }
       ]
   ]
