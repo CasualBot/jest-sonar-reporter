@@ -23,12 +23,6 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run test:coverage
-      # - name: Upload app files for coverage analysis
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: lib
-      #     path: lib/**/*.js
-      #     retention-days: 1
       - name: Upload coverage
         uses: actions/upload-artifact@v2
         with:
@@ -43,19 +37,17 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0 
       - name: Download coverage artifact
         uses: actions/download-artifact@v2
         with:
           name: coverage
-      # - name: Download lib app artifacts
-      #   uses: actions/download-artifact@v2
-      #   with:
-      #     name: lib
+      - name: Move coverage files
+        shell: bash
+        run: |
+          mv coverage/* ./
       - name: Run SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
-        with:
-          name: coverage
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
