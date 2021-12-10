@@ -19,7 +19,7 @@ const processor = (report: any, reporterOptions: Object = {}, jestRootDir = null
 
   mkdirp.sync(path.dirname(outputPath));
 
-  fs.writeFileSync(outputPath, xml(buildXmlReport(report, options), {declaration: true, indent: ' '}));
+  fs.writeFileSync(outputPath, xml(buildXmlReport(report, options), {declaration: false, indent: ' '}));
 
   return report;
 };
