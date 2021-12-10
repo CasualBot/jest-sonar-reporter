@@ -2,6 +2,8 @@
 
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=CasualBot_jest-sonar-reporter&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=CasualBot_jest-sonar-reporter)
 [![Build](https://github.com/CasualBot/jest-sonar-reporter/actions/workflows/test-and-scan.yml/badge.svg)](https://github.com/CasualBot/jest-sonar-reporter/actions/workflows/test-and-scan.yml)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=CasualBot_jest-sonar-reporter&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=CasualBot_jest-sonar-reporter)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=CasualBot_jest-sonar-reporter&metric=coverage)](https://sonarcloud.io/summary/new_code?id=CasualBot_jest-sonar-reporter)
 
 > :warning: **This is currently in development and highly unstable. Use are your own discretion.**
 
