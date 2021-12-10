@@ -43,7 +43,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: coverage
-          path: ./coverage/**/*
+          path: /github/workspace/
       - name: Run SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
         env:
