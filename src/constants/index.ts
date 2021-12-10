@@ -33,7 +33,7 @@ export default {
     reportTestSuiteErrors: false,
     noStackTrace: false,
     testSuitePropertiesFile: 'jestSonarProperties.js',
-    relativePath: false,
+    relativePaths: false,
     formatForSonar56: false
   },
   SUITENAME_VAR: 'suitename',

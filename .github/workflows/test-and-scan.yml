@@ -21,14 +21,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm install
+      - run: npm ci
       - run: npm run build
-      - run: npm run test
-      - name: Upload reports
-        uses: actions/upload-artifact@v2
-        with:
-          name: reports
-          path: reports/**
+      - run: npm run test:coverage
       - name: Upload coverage
         uses: actions/upload-artifact@v2
         with:

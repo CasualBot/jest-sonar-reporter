@@ -28,6 +28,11 @@ module.exports = {
   coverageDirectory: "coverage",
   reporters: [
       'default',
-      '.',
+      [
+        '.',
+        {
+          relativePaths: true,
+        }
+      ]
   ]
 };
