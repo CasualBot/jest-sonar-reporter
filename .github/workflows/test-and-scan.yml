@@ -45,7 +45,7 @@ jobs:
       - name: Move coverage artifacts
         shell: bash
         run: |
-          mv /home/runner/work/jest-sonar-reporter/jest-sonar-reporter/coverage/* ./coverage/*
+          mv /home/runner/work/jest-sonar-reporter/jest-sonar-reporter/* ./coverage/*
       - name: Run SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
         env:
