@@ -32,6 +32,7 @@ module.exports = {
         '.',
         {
           relativePaths: true,
+          outputDirectory: 'coverage'
         }
       ]
   ]

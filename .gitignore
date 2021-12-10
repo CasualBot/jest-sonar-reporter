@@ -10,3 +10,4 @@ test-report.xml
 .vscode
 lib/
 jest-sonar.xml
+.scannerwork
