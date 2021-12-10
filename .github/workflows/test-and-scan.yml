@@ -22,7 +22,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-      - run: npm run build
       - run: npm run test:coverage
       # - name: Upload app files for coverage analysis
       #   uses: actions/upload-artifact@v2
@@ -49,10 +48,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: coverage
-      - name: Download lib app artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: lib
+      # - name: Download lib app artifacts
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: lib
       - name: Run SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
         with:
