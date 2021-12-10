@@ -1,6 +1,6 @@
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 module.exports = {
-  "rootDir": ".",
+  rootDir: ".",
   preset: 'ts-jest',
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
@@ -28,11 +28,12 @@ module.exports = {
   coverageDirectory: "coverage",
   reporters: [
       'default',
-      [
+      [ 
         '.',
         {
           relativePaths: true,
-          outputDirectory: 'coverage'
+          outputName: 'sonar-report.xml',
+          outputPath: 'coverage',
         }
       ]
   ]

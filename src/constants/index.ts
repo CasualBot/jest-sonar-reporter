@@ -15,7 +15,9 @@ export default {
     JEST_SONAR_REPORT_TEST_SUITE_ERRORS: 'reportTestSuiteErrors',
     JEST_SONAR_NO_STACK_TRACE: "noStackTrace",
     JEST_USE_PATH_FOR_SUITE_NAME: 'usePathForSuiteName',
-    JEST_SONAR_TEST_SUITE_PROPERTIES_JSON_FILE: 'testSuitePropertiesFile'
+    JEST_SONAR_TEST_SUITE_PROPERTIES_JSON_FILE: 'testSuitePropertiesFile',
+    JEST_SONAR_RELATIVE_PATHS: 'relativePaths',
+    JEST_SONAR_56_FORMAT: 'formatForSonar56'
   },
   DEFAULT_OPTIONS: {
     suiteName: 'jest tests',

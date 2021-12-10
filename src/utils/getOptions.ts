@@ -28,7 +28,7 @@ function getAppOptions(pathToResolve: any) {
     const pkgpath = path.join(pathToResolve, 'package.json');
 
     if (fs.existsSync(pkgpath)) {
-      let options = (require(pkgpath) || {})['jest-sonar-reporter'];
+      let options = (require(pkgpath) || {})['@casualbot/jest-sonar-reporter'];
 
       if (Object.prototype.toString.call(options) !== '[object Object]') {
         options = {};

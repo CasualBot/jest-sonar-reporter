@@ -1,6 +1,6 @@
 {
   "name": "@casualbot/jest-sonar-reporter",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A Sonar test reporter for Jest.",
   "keywords": [
     "sonar",
@@ -14,7 +14,7 @@
     "test": "tsc --module commonjs && jest",
     "test:watch": "jest --watch",
     "test:coverage": "tsc --module commonjs && jest --coverage",
-    "build": "tsc",
+    "build": "tsc --module commonjs",
     "lint": "eslint . -c .eslintrc.js --quiet",
     "lint:coverage": "eslint . -c .eslintrc.js -f json -o ./coverage/eslint.json"
   },
@@ -57,11 +57,11 @@
     "prettier": "2.5.1",
     "strip-ansi": "^7.0.1",
     "ts-jest": "^27.1.1",
-    "typescript": "^4.5.3",
-    "uuid": "8.3.2"
+    "typescript": "^4.5.3"
   },
   "dependencies": {
     "mkdirp": "1.0.4",
-    "xml": "1.0.1"
+    "xml": "1.0.1",
+    "uuid": "8.3.2"
   }
 }

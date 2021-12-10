@@ -28,7 +28,7 @@ function JestSonar(this: any, globalConfig: any, options: any): void {
 
   if (globalConfig.hasOwnProperty('testResults')) { // eslint-disable-line
     const newConfig = JSON.stringify({
-      reporters: ['jest-sonar-reporter']
+      reporters: ['@casualbot/jest-sonar-reporter']
     }, null, 2);
 
     return processor(globalConfig);
