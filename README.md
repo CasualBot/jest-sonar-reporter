@@ -5,13 +5,9 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=CasualBot_jest-sonar-reporter&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=CasualBot_jest-sonar-reporter)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=CasualBot_jest-sonar-reporter&metric=coverage)](https://sonarcloud.io/summary/new_code?id=CasualBot_jest-sonar-reporter)
 
-> :warning: **This is currently in development and highly unstable. Use are your own discretion.**
-
 `@casualbot/jest-sonar-scanner` is a custom results processor for Jest derived from Christian W. original work [here](https://github.com/3dmind/jest-sonar-reporter).
 
-The processor converts Jest's output in to Sonarqube's [generic data format] to be used by `sonar.testExecutionReportPaths` configuration
-
->I am working towards bringing the original package back to life / providing updates as I require it for every day work and have uses cases I would like to inquire.
+It has been updated to be usable as a reporter in the `jest.config`, as well as, provide the ability to output relative paths for the generated XML file.  
 
 ## Installation
 
