@@ -41,7 +41,7 @@ const addErrorTestResult = function (suite: any) {
   })
 }
 
-export default (report: any, appDirectory: any, options: any): Object => {
+export default (report: any, appDirectory: any, options: any): any => {
   const junitSuitePropertiesFilePath = path.join(process.cwd(), options.testSuitePropertiesFile);
   const ignoreSuitePropertiesCheck = !fs.existsSync(junitSuitePropertiesFilePath);
 
@@ -97,7 +97,7 @@ export default (report: any, appDirectory: any, options: any): Object => {
       : suite.displayName;
 
     // Build replacement map
-    const suiteNameVariables: Object | string | any = {};
+    const suiteNameVariables: string | any = {};
     suiteNameVariables[constants.FILEPATH_VAR] = filepath;
     suiteNameVariables[constants.FILENAME_VAR] = filename;
     suiteNameVariables[constants.TITLE_VAR] = suiteTitle;
@@ -128,7 +128,7 @@ export default (report: any, appDirectory: any, options: any): Object => {
     jsonResults.testsuites[0]._attr.tests += suiteNumTests;
 
     if (!ignoreSuitePropertiesCheck) {
-      const junitSuiteProperties = require(junitSuitePropertiesFilePath)(suite);
+      const junitSuiteProperties = require(junitSuitePropertiesFilePath)(suite); // eslint-disable-line 
 
       // Add any test suite properties
       const testSuitePropertyMain: any = {
@@ -157,7 +157,7 @@ export default (report: any, appDirectory: any, options: any): Object => {
       const testTitle = tc.title;
 
       // Build replacement map
-      const testVariables: Object | string | any = {};
+      const testVariables: string | any = {};
       testVariables[constants.FILEPATH_VAR] = filepath;
       testVariables[constants.FILENAME_VAR] = filename;
       testVariables[constants.SUITENAME_VAR] = suiteTitle;

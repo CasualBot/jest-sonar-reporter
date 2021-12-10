@@ -1,5 +1,5 @@
 import xml from 'xml';
-const mkdirp = require('mkdirp');
+const mkdirp = require('mkdirp'); // eslint-disable-line
 import * as fs from 'fs';
 import * as path from 'path';
 import buildXmlReport from './src/utils/buildXmlReport';
@@ -8,7 +8,7 @@ import getOutputPath from './src/utils/getOutputPath';
 
 const consoleBuffer: any = {};
 
-const processor = (report: any, reporterOptions: Object = {}, jestRootDir = null) => {
+const processor = (report: any, reporterOptions: any = {}, jestRootDir = null) => {
   const options = getOptions.options(reporterOptions);
 
   report.testResults.forEach((t: any, i: any) => {
@@ -26,7 +26,7 @@ const processor = (report: any, reporterOptions: Object = {}, jestRootDir = null
 
 function JestSonar(this: any, globalConfig: any, options: any): void {
 
-  if (globalConfig.hasOwnProperty('testResults')) {
+  if (globalConfig.hasOwnProperty('testResults')) { // eslint-disable-line
     const newConfig = JSON.stringify({
       reporters: ['jest-sonar-reporter']
     }, null, 2);

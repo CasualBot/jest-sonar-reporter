@@ -1,2 +1,6 @@
 node_modules
 lib
+.eslintrc.js
+*.config.js
+*.config.json
+*.d.ts

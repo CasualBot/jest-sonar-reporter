@@ -18,11 +18,11 @@ module.exports = {
   moduleFileExtensions: ["js", 'ts', "jsx", "json", "node"],
   moduleDirectories: ["node_modules", "bower_components", "src"],
   coverageThreshold: {
-    "global": {
-      "branches": 80,
-      "functions": 80,
-      "lines": 80,
-      "statements": -10
+    global: {
+      statements: 80,
+      branches: 80,
+      functions: 80,
+      lines: 80
     }
   },
   coverageDirectory: "coverage",

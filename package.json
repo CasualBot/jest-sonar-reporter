@@ -14,7 +14,9 @@
     "test": "tsc --module commonjs && jest",
     "test:watch": "jest --watch",
     "test:coverage": "tsc --module commonjs && jest --coverage",
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "eslint . -c .eslintrc.js --quiet",
+    "lint:coverage": "eslint . -c .eslintrc.js -f json -o ./coverage/eslint.json"
   },
   "repository": {
     "type": "git",
@@ -48,6 +50,7 @@
     "eslint": "^8.4.1",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jest": "^25.3.0",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-react": "^7.27.1",
     "jest": "27.4.3",
