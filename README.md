@@ -1,5 +1,8 @@
 # Jest Sonar Reporter
 
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=CasualBot_jest-sonar-reporter&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=CasualBot_jest-sonar-reporter)
+[![Build](https://github.com/CasualBot/jest-sonar-reporter/actions/workflows/test-and-scan.yml/badge.svg)](https://github.com/CasualBot/jest-sonar-reporter/actions/workflows/test-and-scan.yml)
+
 > :warning: **This is currently in development and highly unstable. Use are your own discretion.**
 
 `@CasualBot/jest-sonar-scanner` is a custom results processor for Jest derived from Christian W. original work [here](https://github.com/3dmind/jest-sonar-reporter).
