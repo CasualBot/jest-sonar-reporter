@@ -6,18 +6,19 @@ import constants from '../constants';
 import { replaceRootDirInPath } from './replaceRootDirInPath';
 
 function getEnvOptions() {
-  const options = {};
+  let options: any = {};
+  const setupConf: any = constants;
 
-  for (let name in constants.ENV_CONFIG_MAP) {
+  for (let name in setupConf.ENV_CONFIG_MAP) {
     if (process.env[name]) {
-      options[constants.ENV_CONFIG_MAP[name]] = process.env[name];
+      options[setupConf.ENV_CONFIG_MAP[name] as any] = process.env[name];
     }
   }
 
   return options;
 }
 
-function getAppOptions(pathToResolve) {
+function getAppOptions(pathToResolve: any) {
   let traversing = true;
 
   // Find nearest package.json by traversing up directories until /
@@ -42,7 +43,7 @@ function getAppOptions(pathToResolve) {
   return {};
 }
 
-function replaceRootDirInOutput(rootDir, output) {
+function replaceRootDirInOutput(rootDir: any, output: any) {
   return rootDir !== null ? replaceRootDirInPath(rootDir, output) : output;
 }
 
@@ -50,7 +51,7 @@ function getUniqueOutputName() {
   return `jest-sonar-reporter-${uuid()}.xml`
 }
 
-module.exports = {
+export default {
   options: (reporterOptions = {}) => {
     return Object.assign({}, constants.DEFAULT_OPTIONS, reporterOptions, getAppOptions(process.cwd()), getEnvOptions());
   },

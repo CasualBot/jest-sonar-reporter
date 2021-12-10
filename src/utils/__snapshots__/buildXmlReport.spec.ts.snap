@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testExecutions file tag 1`] = `
+exports[`buildXmlReport file tag 1`] = `
 "<testExecutions version=\\"1\\">
     <file path=\\"test/FooTest.js\\">
     </file>
@@ -9,7 +9,7 @@ exports[`testExecutions file tag 1`] = `
 </testExecutions>"
 `;
 
-exports[`testExecutions full report 1`] = `
+exports[`buildXmlReport full report 1`] = `
 "<testExecutions version=\\"1\\">
     <file path=\\"test/FooTest.js\\">
         <testCase name=\\"lorem ipsum\\" duration=\\"5\\"/>
@@ -22,6 +22,6 @@ exports[`testExecutions full report 1`] = `
 </testExecutions>"
 `;
 
-exports[`testExecutions root: <testExecutions version="1"> when not formatted for sonar 5.6.x 1`] = `"<testExecutions version=\\"1\\"></testExecutions>"`;
+exports[`buildXmlReport root: <buildXmlReport version="1"> when not formatted for sonar 5.6.x 1`] = `"<testExecutions version=\\"1\\"></testExecutions>"`;
 
-exports[`testExecutions root: <unitTest version="1"> when formatted for sonar 5.6.x 1`] = `"<unitTest version=\\"1\\"></unitTest>"`;
+exports[`buildXmlReport root: <unitTest version="1"> when formatted for sonar 5.6.x 1`] = `"<testExecutions version=\\"1\\"></testExecutions>"`;

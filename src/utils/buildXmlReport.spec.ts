@@ -1,11 +1,11 @@
-import * as xml from 'xml';
-import { testExecutions } from './testExecutions';
+import xml from 'xml';
+import buildXmlReport from './buildXmlReport';
 
-describe('testExecutions', () => {
-  test('root: <testExecutions version="1"> when not formatted for sonar 5.6.x', () => {
+describe('buildXmlReport', () => {
+  test('root: <buildXmlReport version="1"> when not formatted for sonar 5.6.x', () => {
     const mock = {testResults: []}
 
-    const actualReport = xml(testExecutions(mock, false))
+    const actualReport = xml(buildXmlReport(mock, false))
 
     expect(actualReport).toMatchSnapshot()
   })
@@ -13,7 +13,7 @@ describe('testExecutions', () => {
   test('root: <unitTest version="1"> when formatted for sonar 5.6.x', () => {
     const mock = {testResults: []}
 
-    const actualReport = xml(testExecutions(mock, true))
+    const actualReport = xml(buildXmlReport(mock, true))
 
     expect(actualReport).toMatchSnapshot()
   })
@@ -32,7 +32,7 @@ describe('testExecutions', () => {
       ]
     }
 
-    const actualReport = xml(testExecutions(mock), true)
+    const actualReport = xml(buildXmlReport(mock), true)
 
     expect(actualReport).toMatchSnapshot()
   })
@@ -63,7 +63,7 @@ describe('testExecutions', () => {
       ]
     }
 
-    const actualReport = xml(testExecutions(mock), true)
+    const actualReport = xml(buildXmlReport(mock), true)
 
     expect(actualReport).toMatchSnapshot()
   })

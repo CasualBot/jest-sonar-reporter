@@ -1,46 +1,24 @@
 {
-    // "compilerOptions": {
-    //   "declaration": true,
-    //   "module": "commonjs",
-    //   "moduleResolution": "node",
-    //   "types": [
-    //     "node",
-    //     "jest",
-    //   ],
-    //   "lib": [
-    //     "es6",
-    //     "dom"
-    //   ],
-    //   "rootDir": ".",
-    //   "target": "es2015",
-    //   "outDir": "./lib",
-    //   "preserveConstEnums": true,
-    //   "removeComments": true,
-    //   "inlineSourceMap": false,
-    //   "sourceMap": false,
-    //   "typeRoots": [
-    //     "./node_modules/@types",
-    //     "./node_modules/@jest",
-    //   ]
-    // },
-    // "include": [
-    //   "src/**/*.ts", 
-    //   "index.ts"    
-    // ],
-    // "exclude": [
-    //   "node_modules",
-    //   "**/*.spec.ts"
-    // ]
-    "compilerOptions": {
-      "target": "es5",
-      "module": "commonjs",
-      "lib": ["es2015"],
-      "strict": true,
-      "declaration": true,
-      "outDir": "lib",
-      "sourceMap": false
+  "compilerOptions": {
+    "module": "ES2020",
+    "target": "ES2020",
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "outDir": "lib",
+    "paths": {
+      "*": ["./node_modules/*"],
     },
-    "include": ["src/**/*"],
-    "exclude": ["node_modules", "**/*.spec.ts"]
-  }
+    "moduleResolution": "node",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    
+
+  },
+  "include": ["src/**/*", "index.ts"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}
   

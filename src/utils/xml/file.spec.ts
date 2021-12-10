@@ -1,5 +1,5 @@
-import * as xml from 'xml';
-import { file } from './file';
+import xml from 'xml';
+import file from './file';
 
 describe('file', () => {
   test('<file path=""></file>', () => {
@@ -10,7 +10,7 @@ describe('file', () => {
     }
 
     // Act
-    const actualReport = xml(file(mock))
+    const actualReport = xml(file(mock, false))
 
     // Assert
     expect(actualReport).toMatchSnapshot()
@@ -28,7 +28,7 @@ describe('file', () => {
 
     // Act
 
-    const actualReport = xml(file(mock), true)
+    const actualReport = xml(file(mock, false), true)
 
     // Assert
     expect(actualReport).toMatchSnapshot()

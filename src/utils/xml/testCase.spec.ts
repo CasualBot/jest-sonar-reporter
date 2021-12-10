@@ -1,4 +1,4 @@
-import * as xml from 'xml';
+import xml from 'xml';
 import { testCase } from './testCase';
 
 describe('testCase', () => {
