@@ -13,7 +13,7 @@
   "scripts": {
     "test": "tsc --module commonjs && jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
+    "test:coverage": "tsc --module commonjs && jest --coverage",
     "build": "tsc"
   },
   "repository": {
