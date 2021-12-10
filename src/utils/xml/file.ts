@@ -1,7 +1,7 @@
 import { testCase } from './testCase';
 import * as path from 'path';
 
-export default (testResult: any, relativePaths: boolean = false): any  => {
+export default (testResult: any, relativePaths = false): any  => {
     let aFile: any;
 
     if(relativePaths){

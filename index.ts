@@ -15,7 +15,7 @@ const processor = (report: any, reporterOptions: Object = {}, jestRootDir = null
     t.console = consoleBuffer[t.testFilePath];
   });
 
-  let outputPath = getOutputPath(options, jestRootDir);
+  const outputPath = getOutputPath(options, jestRootDir);
 
   mkdirp.sync(path.dirname(outputPath));
 

@@ -6,10 +6,10 @@ import constants from '../constants';
 import { replaceRootDirInPath } from './replaceRootDirInPath';
 
 function getEnvOptions() {
-  let options: any = {};
+  const options: any = {};
   const setupConf: any = constants;
 
-  for (let name in setupConf.ENV_CONFIG_MAP) {
+  for (const name in setupConf.ENV_CONFIG_MAP) {
     if (process.env[name]) {
       options[setupConf.ENV_CONFIG_MAP[name] as any] = process.env[name];
     }

@@ -43,7 +43,7 @@ const addErrorTestResult = function (suite: any) {
 
 export default (report: any, appDirectory: any, options: any): Object => {
   const junitSuitePropertiesFilePath = path.join(process.cwd(), options.testSuitePropertiesFile);
-  let ignoreSuitePropertiesCheck = !fs.existsSync(junitSuitePropertiesFilePath);
+  const ignoreSuitePropertiesCheck = !fs.existsSync(junitSuitePropertiesFilePath);
 
   // If the usePathForSuiteName option is true and the
   // suiteNameTemplate value is set to the default, overrides
@@ -55,7 +55,7 @@ export default (report: any, appDirectory: any, options: any): Object => {
   }
 
   // Generate a single XML file for all jest tests
-  let jsonResults = {
+  const jsonResults = {
     'testsuites': [{
       '_attr': {
         'name': options.suiteName,
@@ -97,7 +97,7 @@ export default (report: any, appDirectory: any, options: any): Object => {
       : suite.displayName;
 
     // Build replacement map
-    let suiteNameVariables: Object | string | any = {};
+    const suiteNameVariables: Object | string | any = {};
     suiteNameVariables[constants.FILEPATH_VAR] = filepath;
     suiteNameVariables[constants.FILENAME_VAR] = filename;
     suiteNameVariables[constants.TITLE_VAR] = suiteTitle;
@@ -108,7 +108,7 @@ export default (report: any, appDirectory: any, options: any): Object => {
     const suiteExecutionTime = executionTime(suite.perfStats.start, suite.perfStats.end);
 
     const suiteErrors = noResults ? 1 : 0;
-    let testSuite = {
+    const testSuite = {
       testsuite: [{
         _attr: {
           name: replaceVars(suiteOptions.suiteNameTemplate, suiteNameVariables),
@@ -128,15 +128,15 @@ export default (report: any, appDirectory: any, options: any): Object => {
     jsonResults.testsuites[0]._attr.tests += suiteNumTests;
 
     if (!ignoreSuitePropertiesCheck) {
-      let junitSuiteProperties = require(junitSuitePropertiesFilePath)(suite);
+      const junitSuiteProperties = require(junitSuitePropertiesFilePath)(suite);
 
       // Add any test suite properties
-      let testSuitePropertyMain: any = {
+      const testSuitePropertyMain: any = {
         properties: []
       };
 
       Object.keys(junitSuiteProperties).forEach((p) => {
-        let testSuiteProperty: any = {
+        const testSuiteProperty: any = {
           property: {
             _attr: {
               name: p,
@@ -157,7 +157,7 @@ export default (report: any, appDirectory: any, options: any): Object => {
       const testTitle = tc.title;
 
       // Build replacement map
-      let testVariables: Object | string | any = {};
+      const testVariables: Object | string | any = {};
       testVariables[constants.FILEPATH_VAR] = filepath;
       testVariables[constants.FILENAME_VAR] = filename;
       testVariables[constants.SUITENAME_VAR] = suiteTitle;
@@ -165,7 +165,7 @@ export default (report: any, appDirectory: any, options: any): Object => {
       testVariables[constants.TITLE_VAR] = testTitle;
       testVariables[constants.DISPLAY_NAME_VAR] = displayName;
 
-      let testCase: any = {
+      const testCase: any = {
         'testcase': [{
           _attr: {
             classname: replaceVars(suiteOptions.classNameTemplate, testVariables),
@@ -207,7 +207,7 @@ export default (report: any, appDirectory: any, options: any): Object => {
       // Stringify the entire console object
       // Easier this way because formatting in a readable way is tough with XML
       // And this can be parsed more easily
-      let testSuiteConsole: any = {
+      const testSuiteConsole: any = {
         'system-out': {
           _cdata: JSON.stringify(suite.console, null, 2)
         }
@@ -221,7 +221,7 @@ export default (report: any, appDirectory: any, options: any): Object => {
       // Extract and then Stringify the console message value
       // Easier this way because formatting in a readable way is tough with XML
       // And this can be parsed more easily
-      let testSuiteConsole: any = {
+      const testSuiteConsole: any = {
         'system-out': {
           _cdata: JSON.stringify(suite.console.map((item: any) => item.message), null, 2)
         }
