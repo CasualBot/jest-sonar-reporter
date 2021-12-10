@@ -43,7 +43,11 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: coverage
-          path: /github/workspace/
+          path: coverage/
+      - name: Move coverage files
+        shell: bash
+        run: |
+          mv coverage/* ./
       - name: Run SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
         env:
