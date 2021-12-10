@@ -24,13 +24,13 @@ The processor converts Jest's output in to Sonarqube's [generic data format] to 
 Using npm:
 
 ```bash
-npm install --save-dev @CasualBot/jest-sonar-reporter
+npm install --save-dev @casualbot/jest-sonar-reporter
 ```
 
 Using yarn:
 
 ```bash
-yarn add --dev @CasualBot/jest-sonar-reporter
+yarn add --dev @casualbot/jest-sonar-reporter
 ```
 
 ## Usage
