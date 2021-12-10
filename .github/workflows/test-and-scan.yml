@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: coverage
-          path: coverage/**
+          path: coverage/**/*
           retention-days: 1
   sonarcloud:
     name: Scan PR
@@ -43,6 +43,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: coverage
+          path: ./coverage/**/*
       - name: Run SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
         env:
