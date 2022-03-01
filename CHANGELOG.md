@@ -1,1 +1,79 @@
+# 2.2.4
+- chore: update CHANGELOG
+- fix: add .scarnnerwork to npmignore and add CHANGELOG
 
+# 2.2.3
+
+- fix: update readme
+- set proper version
+- Update README.md
+- Update LICENSE
+- Update README.md
+- update version
+- Update README (#4)
+- update readme (#3)
+- Update to create jest-sonar-reporter (#1)
+- Merge branch 'master' into develop
+- Merge develop to release version v2.0.0
+- Chore: Add templates for GitHub.
+- Chore: Update keywords for NPM.
+- Documentation: Update LICENSE
+- Merge branch 'jest-sonar-reporter-11' into develop
+- Documentation: Support different configuration environments.
+- Refactoring: Reduce cyclomatic complexity.
+- Feature: Support different configuration environments.
+- Refactoring: Export default configuration.
+- Refactoring: Reorganise project structure.
+- Chore: Ignore test report.
+- Refactoring: Reduce cyclomatic complexity.
+- Fix: Fetch quality status from SonarCloud.
+- Fix: Coverage Broken: metrics.isEmpty is not a function at tableRow
+- Chore: Update minimum Node version to 8 LTS.
+- Merge branch 'jest-sonar-reporter-14' into develop
+- Fix: Fetch quality status from SonarCloud.
+- Feature: Drop support for env-cmd.
+- Chore: Upgrade dev dependencies.
+- Merge branch 'master' into develop
+- Merge develop to release version v1.3.0
+- Ensure Node4 compatibility.
+- Merge pull request #12 from Dubes/support_for_sonar_5_6
+- jest-sonar-reporter-13 Sonarqube addon has been renamed to Sonarcloud.
+- Undo changes done by prettier
+- Add support for Sonarqube 5.6.x
+- Merge branch 'master' into develop
+- Merge branch 'develop'
+- v1.2.0-4
+- Travis needs organization key for SonarQube.
+- Update token for SonarQube.
+- Deprecate old configuration option.
+- Fixes typo.
+- jest-sonar-reporter-9 Adds documentation for the new configuration options.
+- Configure scanned branches.
+- Adds script to update Sonar's project version.
+- Upgrades version of Jest.
+- jest-sonar-reporter-8 Adds support to use package.json for configuration.
+- Refactoring
+- Cleans up generated reports.
+- Merge pull request #7 from qtell/master
+- testResultsProcessor function is now required to return the modified results
+- v1.1.0
+- jest-sonar-reporter-5 Add support for stack traces.
+- Enable debug output.
+- jest-sonar-reporter-4 Replace TestExecutions class with function.
+- jest-sonar-reporter-3 Replace File class with function.
+- jest-sonar-reporter-2 Replace TestCase class with function.
+- jest-sonar-reporter-1 Replace Failure class with function.
+- Run tests with coverage.
+- Provide proper documentation.
+- Provide information for publishing.
+- Travis CI integration.
+- Import test results and coverage information into Sonar.
+- Write test results into XML file.
+- Use 'fullName' and 'duration' for test case.
+- Test full report.
+- Adds failure tag with message information.
+- Adds test case tag with name and duration information.
+- Adds file tag with path information.
+- Adds root tag with version information.
+- Project setup.
+- Initial commit
