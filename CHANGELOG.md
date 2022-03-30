@@ -1,3 +1,6 @@
+# 2.2.5
+- fix: update documentation in README
+
 # 2.2.4
 - chore: update CHANGELOG
 - fix: add .scarnnerwork to npmignore and add CHANGELOG

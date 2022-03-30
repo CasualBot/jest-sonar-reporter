@@ -129,8 +129,8 @@ Or you can define your options in your reporter configuration.
             '@casualbot/jest-sonar-reporter',
             {
                 relativePaths: true,
-                reportName: 'sonar-report.xml',
-                outputPath: 'coverage',
+                outputName: 'sonar-report.xml',
+                outputDirectory: 'coverage'
             }
         ]
     ],
