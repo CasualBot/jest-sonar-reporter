@@ -1,12 +1,11 @@
 import JestSonar from '../src/jest-sonar';
-import GlobalConfiguration from './interfaces/global-config';
+import config from '../__mocks__/config.json';
+
 describe('JestSonar', () => {
-  const globalConfig = jest.fn<GlobalConfiguration, []>(() => {
-    return {};
-  });
+  const globalConfig = config;
   let jestSonar: JestSonar;
   beforeEach(() => {
-    jestSonar = new JestSonar(globalConfig());
+    jestSonar = new JestSonar(globalConfig, {});
   });
 
   it('should be a function', () => {

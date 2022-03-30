@@ -14,8 +14,9 @@
     "moduleResolution": "node",
     "allowJs": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true
   },
-  "include": ["src/**/*", "index.ts"],
+  "include": ["src/**/*", "index.ts", "__mocks__/**/*.json"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
