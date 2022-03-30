@@ -17,6 +17,6 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*", "index.ts", "__mocks__/**/*.json"],
+  "include": ["src/**/*", "src/index.ts", "__mocks__/**/*.json"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

@@ -13,7 +13,6 @@ module.exports = {
   testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx|js|ts)?$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   coverageReporters: ["lcov"],
-  moduleFileExtensions: ["js", "ts", "jsx", "json", "node"],
   moduleDirectories: ["node_modules", "bower_components", "src"],
   coverageThreshold: {
     global: {

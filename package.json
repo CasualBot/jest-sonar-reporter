@@ -28,9 +28,9 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc --module commonjs",
-    "lint": "eslint . --ext .ts,.json -c .eslintrc.json --quiet",
+    "lint": "eslint . --ext .ts -c .eslintrc.json --quiet",
     "lint:coverage": "eslint . --ext .ts -c .eslintrc.json -f json-relative -o ./coverage/eslint.json",
-    "lint:fix": "eslint . --ext .ts,.json,.babelrc -c .eslintrc.json --fix",
+    "lint:fix": "eslint . --ext .ts -c .eslintrc.json --fix",
     "test": "tsc --module commonjs && jest",
     "test:coverage": "tsc --module commonjs && jest --coverage",
     "test:watch": "jest --watch"
