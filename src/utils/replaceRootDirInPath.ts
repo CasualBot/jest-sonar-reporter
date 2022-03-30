@@ -2,14 +2,16 @@
 // in order to reduce incompatible jest dependencies
 import * as path from 'path';
 
+export const replaceRootDirInPath = (
+  rootDir: string,
+  filePath: string
+): any => {
+  if (!/^<rootDir>/.test(filePath)) {
+    return filePath;
+  }
 
-export const replaceRootDirInPath = (rootDir: string, filePath: string): any => {
-    if (!/^<rootDir>/.test(filePath)) {
-      return filePath;
-    }
-
-    return path.resolve(
-      rootDir,
-      path.normalize('./' + filePath.substr('<rootDir>'.length))
-    )
-}
+  return path.resolve(
+    rootDir,
+    path.normalize('./' + filePath.substr('<rootDir>'.length))
+  );
+};

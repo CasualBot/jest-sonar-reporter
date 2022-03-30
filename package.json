@@ -15,27 +15,30 @@
     "javascript",
     "typescript"
   ],
-  "main": "lib/index.js",
-  "scripts": {
-    "test": "tsc --module commonjs && jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "tsc --module commonjs && jest --coverage",
-    "build": "tsc --module commonjs",
-    "lint": "eslint . -c .eslintrc.js --quiet",
-    "lint:coverage": "eslint . -c .eslintrc.js -f json-relative -o ./coverage/eslint.json"
+  "homepage": "https://github.com/CasualBot/jest-sonar-reporter#readme",
+  "bugs": {
+    "url": "https://github.com/CasualBot/jest-sonar-reporter/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CasualBot/jest-sonar-reporter.git"
   },
-  "author": "Shawn Bernard <casualbotdev@gmail.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/CasualBot/jest-sonar-reporter/issues"
+  "author": "Shawn Bernard <casualbotdev@gmail.com>",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc --module commonjs",
+    "lint": "eslint . --ext .ts,.json -c .eslintrc.json --quiet",
+    "lint:coverage": "eslint . --ext .ts -c .eslintrc.json -f json-relative -o ./coverage/eslint.json",
+    "lint:fix": "eslint . --ext .ts,.json,.babelrc -c .eslintrc.json --fix",
+    "test": "tsc --module commonjs && jest",
+    "test:coverage": "tsc --module commonjs && jest --coverage",
+    "test:watch": "jest --watch"
   },
-  "homepage": "https://github.com/CasualBot/jest-sonar-reporter#readme",
-  "engines": {
-    "node": ">=16.0.0"
+  "dependencies": {
+    "mkdirp": "1.0.4",
+    "uuid": "8.3.2",
+    "xml": "1.0.1"
   },
   "devDependencies": {
     "@babel/cli": "7.16.0",
@@ -49,26 +52,24 @@
     "@types/node": "16.11.12",
     "@types/uuid": "8.3.3",
     "@types/xml": "1.0.6",
-    "@typescript-eslint/eslint-plugin": "^5.6.0",
-    "@typescript-eslint/parser": "^5.6.0",
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "27.4.2",
-    "eslint": "^8.4.1",
-    "eslint-config-prettier": "8.3.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-formatter-json-relative": "^0.1.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jest": "^25.3.0",
-    "eslint-plugin-prettier": "4.0.0",
+    "eslint-plugin-json-format": "^2.0.1",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.27.1",
     "jest": "27.4.3",
     "prettier": "2.5.1",
     "strip-ansi": "^7.0.1",
     "ts-jest": "^27.1.1",
-    "typescript": "^4.5.3"
+    "typescript": "^4.6.3"
   },
-  "dependencies": {
-    "mkdirp": "1.0.4",
-    "uuid": "8.3.2",
-    "xml": "1.0.1"
+  "engines": {
+    "node": ">=16.0.0"
   }
 }

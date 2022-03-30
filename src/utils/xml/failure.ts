@@ -9,5 +9,5 @@ export const failure = (message: string): any => {
       },
       _cdata: filteredMessage
     }
-  }
-}
+  };
+};

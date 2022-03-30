@@ -1,0 +1,77 @@
+{
+  "bail": 0,
+  "changedFilesWithAncestor": false,
+  "changedSince": "",
+  "collectCoverage": false,
+  "collectCoverageFrom": [],
+  "collectCoverageOnlyFrom": "undefined",
+  "coverageDirectory": "D:\\workspace\\jest-sonar-reporter\\coverage",
+  "coverageProvider": "babel",
+  "coverageReporters": [
+    "lcov"
+  ],
+  "coverageThreshold": {
+    "global": {
+      "statements": 80,
+      "branches": 80,
+      "functions": 80,
+      "lines": 80
+    }
+  },
+  "detectLeaks": false,
+  "detectOpenHandles": false,
+  "errorOnDeprecated": false,
+  "expand": false,
+  "filter": "",
+  "findRelatedTests": false,
+  "forceExit": false,
+  "globalSetup": "",
+  "globalTeardown": "",
+  "json": false,
+  "lastCommit": false,
+  "listTests": false,
+  "logHeapUsage": false,
+  "maxConcurrency": 5,
+  "maxWorkers": 15,
+  "noSCM": "",
+  "noStackTrace": false,
+  "nonFlagArgs": [],
+  "notify": false,
+  "notifyMode": "failure-change",
+  "onlyChanged": false,
+  "onlyFailures": false,
+  "outputFile": "",
+  "passWithNoTests": false,
+  "projects": [],
+  "replname": "",
+  "reporters": [
+    [
+      "default",
+      {}
+    ],
+    [
+      "./src/index.js",
+      [
+        "Object"
+      ]
+    ]
+  ],
+  "rootDir": "./src",
+  "runTestsByPath": false,
+  "silent": "",
+  "skipFilter": false,
+  "snapshotFormat": "",
+  "testFailureExitCode": 1,
+  "testNamePattern": "",
+  "testPathPattern": "",
+  "testResultsProcessor": "",
+  "testSequencer": "",
+  "testTimeout": "",
+  "updateSnapshot": "new",
+  "useStderr": false,
+  "verbose": "",
+  "watch": false,
+  "watchAll": false,
+  "watchPlugins": "",
+  "watchman": true
+}

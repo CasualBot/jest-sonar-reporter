@@ -1,12 +1,12 @@
 // Copied from https://raw.githubusercontent.com/jest-community/jest-junit/master/utils/buildJsonResults.js
 import stripAnsi from 'strip-ansi';
-import constants from '../constants'; 
+import constants from '../constants';
 import * as path from 'path';
 import * as fs from 'fs';
 
 const toTemplateTag = function (varName: string) {
-  return "{" + varName + "}";
-}
+  return '{' + varName + '}';
+};
 
 const replaceVars = function (strOrFunc: any, variables: any) {
   if (typeof strOrFunc === 'string') {
@@ -27,47 +27,53 @@ const replaceVars = function (strOrFunc: any, variables: any) {
 
 const executionTime = function (startTime: any, endTime: any) {
   return (endTime - startTime) / 1000;
-}
+};
 
 const addErrorTestResult = function (suite: any) {
   suite.testResults.push({
-    "ancestorTitles": [],
-    "duration": 0,
-    "failureMessages": [
-      suite.failureMessage
-    ],
-    "numPassingAsserts": 0,
-    "status": "error"
-  })
-}
+    ancestorTitles: [],
+    duration: 0,
+    failureMessages: [suite.failureMessage],
+    numPassingAsserts: 0,
+    status: 'error'
+  });
+};
 
 export default (report: any, appDirectory: any, options: any): any => {
-  const junitSuitePropertiesFilePath = path.join(process.cwd(), options.testSuitePropertiesFile);
-  const ignoreSuitePropertiesCheck = !fs.existsSync(junitSuitePropertiesFilePath);
+  const junitSuitePropertiesFilePath = path.join(
+    process.cwd(),
+    options.testSuitePropertiesFile
+  );
+  const ignoreSuitePropertiesCheck = !fs.existsSync(
+    junitSuitePropertiesFilePath
+  );
 
   // If the usePathForSuiteName option is true and the
   // suiteNameTemplate value is set to the default, overrides
   // the suiteNameTemplate.
-  if (options.usePathForSuiteName === 'true' &&
-      options.suiteNameTemplate === toTemplateTag(constants.TITLE_VAR)) {
-
+  if (
+    options.usePathForSuiteName === 'true' &&
+    options.suiteNameTemplate === toTemplateTag(constants.TITLE_VAR)
+  ) {
     options.suiteNameTemplate = toTemplateTag(constants.FILEPATH_VAR);
   }
 
   // Generate a single XML file for all jest tests
   const jsonResults = {
-    'testsuites': [{
-      '_attr': {
-        'name': options.suiteName,
-        'tests': 0,
-        'failures': 0,
-        'errors': 0,
-        // Overall execution time:
-        // Since tests are typically executed in parallel this time can be significantly smaller
-        // than the sum of the individual test suites
-        'time': executionTime(report.startTime, Date.now())
+    testsuites: [
+      {
+        _attr: {
+          name: options.suiteName,
+          tests: 0,
+          failures: 0,
+          errors: 0,
+          // Overall execution time:
+          // Since tests are typically executed in parallel this time can be significantly smaller
+          // than the sum of the individual test suites
+          time: executionTime(report.startTime, Date.now())
+        }
       }
-    }]
+    ]
   };
 
   // Iterate through outer testResults (test suites)
@@ -77,11 +83,13 @@ export default (report: any, appDirectory: any, options: any): any => {
       return;
     }
 
-    const noResultOptions = noResults ? {
-      suiteNameTemplate: toTemplateTag(constants.FILEPATH_VAR),
-      titleTemplate: toTemplateTag(constants.FILEPATH_VAR),
-      classNameTemplate: `Test suite failed to run`
-    } : {};
+    const noResultOptions = noResults
+      ? {
+          suiteNameTemplate: toTemplateTag(constants.FILEPATH_VAR),
+          titleTemplate: toTemplateTag(constants.FILEPATH_VAR),
+          classNameTemplate: 'Test suite failed to run'
+        }
+      : {};
 
     const suiteOptions = Object.assign({}, options, noResultOptions);
     if (noResults) {
@@ -92,9 +100,10 @@ export default (report: any, appDirectory: any, options: any): any => {
     const filepath = path.relative(appDirectory, suite.testFilePath);
     const filename = path.basename(filepath);
     const suiteTitle = suite.testResults[0].ancestorTitles[0];
-    const displayName = typeof suite.displayName === 'object'
-      ? suite.displayName.name
-      : suite.displayName;
+    const displayName =
+      typeof suite.displayName === 'object'
+        ? suite.displayName.name
+        : suite.displayName;
 
     // Build replacement map
     const suiteNameVariables: string | any = {};
@@ -104,22 +113,33 @@ export default (report: any, appDirectory: any, options: any): any => {
     suiteNameVariables[constants.DISPLAY_NAME_VAR] = displayName;
 
     // Add <testsuite /> properties
-    const suiteNumTests = suite.numFailingTests + suite.numPassingTests + suite.numPendingTests;
-    const suiteExecutionTime = executionTime(suite.perfStats.start, suite.perfStats.end);
+    const suiteNumTests =
+      suite.numFailingTests + suite.numPassingTests + suite.numPendingTests;
+    const suiteExecutionTime = executionTime(
+      suite.perfStats.start,
+      suite.perfStats.end
+    );
 
     const suiteErrors = noResults ? 1 : 0;
     const testSuite = {
-      testsuite: [{
-        _attr: {
-          name: replaceVars(suiteOptions.suiteNameTemplate, suiteNameVariables),
-          errors: suiteErrors,
-          failures: suite.numFailingTests,
-          skipped: suite.numPendingTests,
-          timestamp: (new Date(suite.perfStats.start)).toISOString().slice(0, -5),
-          time: suiteExecutionTime,
-          tests: suiteNumTests
+      testsuite: [
+        {
+          _attr: {
+            name: replaceVars(
+              suiteOptions.suiteNameTemplate,
+              suiteNameVariables
+            ),
+            errors: suiteErrors,
+            failures: suite.numFailingTests,
+            skipped: suite.numPendingTests,
+            timestamp: new Date(suite.perfStats.start)
+              .toISOString()
+              .slice(0, -5),
+            time: suiteExecutionTime,
+            tests: suiteNumTests
+          }
         }
-      }]
+      ]
     };
 
     // Update top level testsuites properties
@@ -128,7 +148,7 @@ export default (report: any, appDirectory: any, options: any): any => {
     jsonResults.testsuites[0]._attr.tests += suiteNumTests;
 
     if (!ignoreSuitePropertiesCheck) {
-      const junitSuiteProperties = require(junitSuitePropertiesFilePath)(suite); // eslint-disable-line 
+      const junitSuiteProperties = require(junitSuitePropertiesFilePath)(suite); // eslint-disable-line
 
       // Add any test suite properties
       const testSuitePropertyMain: any = {
@@ -166,31 +186,37 @@ export default (report: any, appDirectory: any, options: any): any => {
       testVariables[constants.DISPLAY_NAME_VAR] = displayName;
 
       const testCase: any = {
-        'testcase': [{
-          _attr: {
-            classname: replaceVars(suiteOptions.classNameTemplate, testVariables),
-            name: replaceVars(suiteOptions.titleTemplate, testVariables),
-            time: tc.duration / 1000,
-            file: '',
-            
-          },
-        }]
+        testcase: [
+          {
+            _attr: {
+              classname: replaceVars(
+                suiteOptions.classNameTemplate,
+                testVariables
+              ),
+              name: replaceVars(suiteOptions.titleTemplate, testVariables),
+              time: tc.duration / 1000,
+              file: ''
+            }
+          }
+        ]
       };
 
       if (suiteOptions.addFileAttribute === 'true') {
         testCase.testcase[0]._attr.file = filepath;
       }
 
-      if (tc.status === 'failed'|| tc.status === 'error') {
-        const failureMessages = options.noStackTrace === 'true' && tc.failureDetails ?
-            tc.failureDetails.map((detail: any) => detail.message) : tc.failureMessages;
+      if (tc.status === 'failed' || tc.status === 'error') {
+        const failureMessages =
+          options.noStackTrace === 'true' && tc.failureDetails
+            ? tc.failureDetails.map((detail: any) => detail.message)
+            : tc.failureMessages;
 
         failureMessages.forEach((failure: any) => {
-          const tagName = tc.status === 'failed' ? 'failure': 'error'
+          const tagName = tc.status === 'failed' ? 'failure' : 'error';
           testCase.testcase.push({
             [tagName]: stripAnsi(failure)
           });
-        })
+        });
       }
 
       if (tc.status === 'pending') {
@@ -203,7 +229,11 @@ export default (report: any, appDirectory: any, options: any): any => {
     });
 
     // Write stdout console output if available
-    if (suiteOptions.includeConsoleOutput === 'true' && suite.console && suite.console.length) {
+    if (
+      suiteOptions.includeConsoleOutput === 'true' &&
+      suite.console &&
+      suite.console.length
+    ) {
       // Stringify the entire console object
       // Easier this way because formatting in a readable way is tough with XML
       // And this can be parsed more easily
@@ -217,13 +247,21 @@ export default (report: any, appDirectory: any, options: any): any => {
     }
 
     // Write short stdout console output if available
-    if (suiteOptions.includeShortConsoleOutput === 'true' && suite.console && suite.console.length) {
+    if (
+      suiteOptions.includeShortConsoleOutput === 'true' &&
+      suite.console &&
+      suite.console.length
+    ) {
       // Extract and then Stringify the console message value
       // Easier this way because formatting in a readable way is tough with XML
       // And this can be parsed more easily
       const testSuiteConsole: any = {
         'system-out': {
-          _cdata: JSON.stringify(suite.console.map((item: any) => item.message), null, 2)
+          _cdata: JSON.stringify(
+            suite.console.map((item: any) => item.message),
+            null,
+            2
+          )
         }
       };
 

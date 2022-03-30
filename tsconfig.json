@@ -9,16 +9,13 @@
     "experimentalDecorators": true,
     "outDir": "lib",
     "paths": {
-      "*": ["./node_modules/*"],
+      "*": ["./node_modules/*"]
     },
     "moduleResolution": "node",
     "allowJs": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    
-
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*", "index.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
-  

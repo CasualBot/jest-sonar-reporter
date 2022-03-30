@@ -1,4 +1,4 @@
-import { failure } from "./failure";
+import { failure } from './failure';
 
 export const testCase = (testResult: any): any => {
   let failures;
@@ -7,11 +7,11 @@ export const testCase = (testResult: any): any => {
       name: testResult.fullName || testResult.title,
       duration: testResult.duration || 0
     }
-  }
+  };
 
   if (testResult.status === 'failed') {
-    failures = testResult.failureMessages.map(failure)
-    return {testCase: [aTestCase].concat(failures)}
-  } 
-  return {testCase: aTestCase}
-}
+    failures = testResult.failureMessages.map(failure);
+    return { testCase: [aTestCase].concat(failures) };
+  }
+  return { testCase: aTestCase };
+};

@@ -22,7 +22,7 @@ function getAppOptions(pathToResolve: any) {
   let traversing = true;
 
   // Find nearest package.json by traversing up directories until /
-  while(traversing) {
+  while (traversing) {
     traversing = pathToResolve !== path.sep;
 
     const pkgpath = path.join(pathToResolve, 'package.json');
@@ -48,12 +48,18 @@ function replaceRootDirInOutput(rootDir: any, output: any) {
 }
 
 function getUniqueOutputName() {
-  return `jest-sonar-reporter-${uuid()}.xml`
+  return `jest-sonar-reporter-${uuid()}.xml`;
 }
 
 export default {
   options: (reporterOptions = {}) => {
-    return Object.assign({}, constants.DEFAULT_OPTIONS, reporterOptions, getAppOptions(process.cwd()), getEnvOptions());
+    return Object.assign(
+      {},
+      constants.DEFAULT_OPTIONS,
+      reporterOptions,
+      getAppOptions(process.cwd()),
+      getEnvOptions()
+    );
   },
   getAppOptions: getAppOptions,
   getEnvOptions: getEnvOptions,

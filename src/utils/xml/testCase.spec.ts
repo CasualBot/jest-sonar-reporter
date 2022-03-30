@@ -7,14 +7,14 @@ describe('testCase', () => {
     const mock = {
       duration: 5,
       fullName: 'lorem ipsum'
-    }
+    };
 
     // Act
-    const actualReport = xml(testCase(mock))
+    const actualReport = xml(testCase(mock));
 
     // Assert
-    expect(actualReport).toMatchSnapshot()
-  })
+    expect(actualReport).toMatchSnapshot();
+  });
 
   test('failing test case', () => {
     // Arrange
@@ -22,12 +22,12 @@ describe('testCase', () => {
       failureMessages: ['Lorem ipsum'],
       status: 'failed',
       title: 'lorem ipsum'
-    }
- 
+    };
+
     // Act
-    const actualReport = xml(testCase(mock), true)
+    const actualReport = xml(testCase(mock), true);
 
     // Assert
-    expect(actualReport).toMatchSnapshot()
-  })
-})
+    expect(actualReport).toMatchSnapshot();
+  });
+});

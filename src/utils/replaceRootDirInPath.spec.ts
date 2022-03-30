@@ -1,5 +1,5 @@
 describe('replaceRootDirInPath', () => {
-    it('should run', () => {
-        expect(true).toBe(true);
-    })
+  it('should run', () => {
+    expect(true).toBe(true);
+  });
 });

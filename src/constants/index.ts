@@ -13,7 +13,7 @@ export default {
     JEST_SONAR_INCLUDE_CONSOLE_OUTPUT: 'includeConsoleOutput',
     JEST_SONAR_INCLUDE_SHORT_CONSOLE_OUTPUT: 'includeShortConsoleOutput',
     JEST_SONAR_REPORT_TEST_SUITE_ERRORS: 'reportTestSuiteErrors',
-    JEST_SONAR_NO_STACK_TRACE: "noStackTrace",
+    JEST_SONAR_NO_STACK_TRACE: 'noStackTrace',
     JEST_USE_PATH_FOR_SUITE_NAME: 'usePathForSuiteName',
     JEST_SONAR_TEST_SUITE_PROPERTIES_JSON_FILE: 'testSuitePropertiesFile',
     JEST_SONAR_RELATIVE_PATHS: 'relativePaths',
@@ -43,5 +43,5 @@ export default {
   FILENAME_VAR: 'filename',
   FILEPATH_VAR: 'filepath',
   TITLE_VAR: 'title',
-  DISPLAY_NAME_VAR: 'displayName',
+  DISPLAY_NAME_VAR: 'displayName'
 };

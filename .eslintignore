@@ -1,6 +1,12 @@
-node_modules
 lib
-.eslintrc.js
+.eslintrc.json
 *.config.js
 *.config.json
 *.d.ts
+coverage
+.github
+# eslint ignores hidden files by default
+!.*
+**/node_modules
+**/.vscode/**/*
+tsconfig.json
