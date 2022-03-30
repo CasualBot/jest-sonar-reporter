@@ -19,7 +19,9 @@ export default class JestSonar {
   }
 
   /**
-   *
+   * TODO:
+   *  - interfaces for test and testResult
+   *  -
    * @param test
    * @param testResult
    */
@@ -30,13 +32,15 @@ export default class JestSonar {
   }
 
   /**
-   * See customer runners from jest
+   * TODO:
+   * - Contexts interface
    * https://jestjs.io/docs/configuration#reporters-arraymodulename--modulename-options
    * @param contexts Context in which the jest suite was ran
    * @param results Results object from executed tests
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onRunComplete(contexts: object, results: Results): void {
-    this.report.process(results, this._options, this._globalConfig.rootDir);
+    // TODO: This needs to be hooked up
+    // this.report.process(results, this._options, this._globalConfig.rootDir);
   }
 }
