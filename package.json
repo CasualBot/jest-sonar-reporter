@@ -35,8 +35,7 @@
   },
   "homepage": "https://github.com/CasualBot/jest-sonar-reporter#readme",
   "engines": {
-    "npm": ">=8.0.0",
-    "node": ">=16.0.0"
+    "node": ">=14.0.0"
   },
   "devDependencies": {
     "@babel/cli": "7.16.0",
