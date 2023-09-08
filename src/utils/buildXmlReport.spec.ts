@@ -59,6 +59,16 @@ describe('buildXmlReport', () => {
               status: 'failed',
             }
           ]
+        },
+        {
+          testFilePath: 'test/BazTest.js',
+          testResults: [
+            {
+              duration: 5,
+              fullName: 'Skipped test',
+              status: 'pending',
+            }
+          ]
         }
       ]
     }
