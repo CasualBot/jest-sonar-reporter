@@ -23,7 +23,21 @@ describe('testCase', () => {
       status: 'failed',
       title: 'lorem ipsum'
     }
- 
+
+    // Act
+    const actualReport = xml(testCase(mock), true)
+
+    // Assert
+    expect(actualReport).toMatchSnapshot()
+  })
+
+  test('skipped test case', () => {
+    // Arrange
+    const mock = {
+      status: 'pending',
+      title: 'lorem ipsum'
+    }
+
     // Act
     const actualReport = xml(testCase(mock), true)
 
