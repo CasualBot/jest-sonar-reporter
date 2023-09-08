@@ -7,3 +7,9 @@ exports[`testCase failing test case 1`] = `
     <failure message=\\"Lorem ipsum\\"><![CDATA[Lorem ipsum]]></failure>
 </testCase>"
 `;
+
+exports[`testCase skipped test case 1`] = `
+"<testCase name=\\"lorem ipsum\\" duration=\\"0\\">
+    <skipped/>
+</testCase>"
+`;
