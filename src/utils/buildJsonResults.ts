@@ -237,3 +237,4 @@ export default (report: any, appDirectory: any, options: any): any => {
 
   return jsonResults;
 };
+
