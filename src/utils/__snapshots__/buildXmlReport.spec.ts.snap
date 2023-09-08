@@ -19,6 +19,11 @@ exports[`buildXmlReport full report 1`] = `
             <failure message=\\"Lorem ipsum\\"><![CDATA[Lorem ipsum]]></failure>
         </testCase>
     </file>
+    <file path=\\"test/BazTest.js\\">
+        <testCase name=\\"Skipped test\\" duration=\\"5\\">
+            <skipped/>
+        </testCase>
+    </file>
 </testExecutions>"
 `;
 
