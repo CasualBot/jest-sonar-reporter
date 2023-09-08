@@ -62,6 +62,7 @@ export default (report: any, appDirectory: any, options: any): any => {
         'tests': 0,
         'failures': 0,
         'errors': 0,
+        'skipped': 0,
         // Overall execution time:
         // Since tests are typically executed in parallel this time can be significantly smaller
         // than the sum of the individual test suites
@@ -124,6 +125,7 @@ export default (report: any, appDirectory: any, options: any): any => {
 
     // Update top level testsuites properties
     jsonResults.testsuites[0]._attr.failures += suite.numFailingTests;
+    jsonResults.testsuites[0]._attr.skipped += suite.numPendingTests;
     jsonResults.testsuites[0]._attr.errors += suiteErrors;
     jsonResults.testsuites[0]._attr.tests += suiteNumTests;
 
