@@ -13,7 +13,6 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x]
-        sonar-token: ${{ secrets.SONAR_TOKEN }}
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -28,7 +27,7 @@ jobs:
       - name: Run SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
         with: 
-          SONAR_TOKEN: ${{ matrix.sonar-token }}
+          SONAR_TOKEN: ${{ secrets.sonar-token }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ SONAR_TOKEN }}
