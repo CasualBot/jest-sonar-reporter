@@ -1,6 +1,6 @@
 {
   "name": "@casualbot/jest-sonar-reporter",
-  "version": "2.2.7",
+  "version": "2.3.0",
   "description": "A Sonar test reporter for Jest.",
   "keywords": [
     "sonar",
