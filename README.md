@@ -3,7 +3,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=CasualBot_jest-sonar-reporter&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=CasualBot_jest-sonar-reporter)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=CasualBot_jest-sonar-reporter&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=CasualBot_jest-sonar-reporter)
 
-`@casualbot/jest-sonar-scanner` is a custom results processor for Jest derived from Christian W. original work [here](https://github.com/3dmind/jest-sonar-reporter).
+`@casualbot/jest-sonar-reporter` is a custom results processor for Jest derived from Christian W. original work [here](https://github.com/3dmind/jest-sonar-reporter).
 
 It has been updated to be usable as a reporter in the `jest.config`, as well as, provide the ability to output relative paths for the generated XML file.  
 
