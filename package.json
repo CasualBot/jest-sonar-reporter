@@ -16,6 +16,7 @@
     "typescript"
   ],
   "main": "lib/index.js",
+  "files": [ "lib", "lib/src" ],
   "scripts": {
     "test": "tsc --module commonjs && jest",
     "test:watch": "jest --watch",
