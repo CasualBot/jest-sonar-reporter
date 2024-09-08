@@ -10,7 +10,7 @@ describe('file', () => {
     }
 
     // Act
-    const actualReport = xml(file(mock, false))
+    const actualReport = xml(file(mock, false, null))
 
     // Assert
     expect(actualReport).toMatchSnapshot()
@@ -27,8 +27,21 @@ describe('file', () => {
     }
 
     // Act
+    const actualReport = xml(file(mock, false, null), true)
 
-    const actualReport = xml(file(mock, false), true)
+    // Assert
+    expect(actualReport).toMatchSnapshot()
+  })
+
+  test('testCase projectRoot', () => {
+    // Arrange
+    const mock = {
+      testFilePath: 'test/FooTest.js',
+      testResults: []
+    }
+
+    // Act
+    const actualReport = xml(file(mock, true, 'test'), true)
 
     // Assert
     expect(actualReport).toMatchSnapshot()

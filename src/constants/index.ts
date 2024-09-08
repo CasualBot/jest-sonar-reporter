@@ -17,6 +17,7 @@ export default {
     JEST_USE_PATH_FOR_SUITE_NAME: 'usePathForSuiteName',
     JEST_SONAR_TEST_SUITE_PROPERTIES_JSON_FILE: 'testSuitePropertiesFile',
     JEST_SONAR_RELATIVE_PATHS: 'relativePaths',
+    JEST_SONAR_PROJECT_ROOT: 'projectRoot',
     JEST_SONAR_56_FORMAT: 'formatForSonar56'
   },
   DEFAULT_OPTIONS: {
@@ -36,6 +37,7 @@ export default {
     noStackTrace: false,
     testSuitePropertiesFile: 'jestSonarProperties.js',
     relativePaths: false,
+    projectRoot: null,
     formatForSonar56: false
   },
   SUITENAME_VAR: 'suitename',
