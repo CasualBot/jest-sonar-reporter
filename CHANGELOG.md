@@ -1,3 +1,8 @@
+# 2.4.0 
+- Fix package name in README (scanner -> reporter) #23
+- Add files to solve NPM 10 lib/src strip problem #22
+- Add projectRoot option for relativePaths #20
+
 # 2.2.5
 - fix: update documentation in README
 
