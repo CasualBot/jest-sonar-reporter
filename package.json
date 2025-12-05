@@ -1,6 +1,6 @@
 {
   "name": "@casualbot/jest-sonar-reporter",
-  "version": "2.5.0",
+  "version": "3.0.0",
   "description": "A Sonar test reporter for Jest.",
   "keywords": [
     "sonar",
@@ -16,14 +16,17 @@
     "typescript"
   ],
   "main": "lib/index.js",
-  "files": [ "lib", "lib/src" ],
+  "files": [
+    "lib",
+    "lib/src"
+  ],
   "scripts": {
     "test": "tsc --module commonjs && jest",
     "test:watch": "jest --watch",
     "test:coverage": "tsc --module commonjs && jest --coverage",
     "build": "tsc --module commonjs",
-    "lint": "eslint . -c .eslintrc.js --quiet",
-    "lint:coverage": "eslint . -c .eslintrc.js -f json-relative -o ./coverage/eslint.json"
+    "lint": "eslint . --quiet",
+    "lint:coverage": "eslint . -f json-relative -o ./coverage/eslint.json"
   },
   "repository": {
     "type": "git",
@@ -36,36 +39,37 @@
   },
   "homepage": "https://github.com/CasualBot/jest-sonar-reporter#readme",
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.16.0",
-    "@babel/core": "7.16.0",
-    "@babel/plugin-transform-modules-commonjs": "7.16.0",
-    "@babel/plugin-transform-typescript": "7.16.1",
-    "@babel/preset-env": "7.16.4",
-    "@babel/preset-typescript": "7.16.0",
-    "@types/jest": "27.0.3",
-    "@types/mkdirp": "1.0.2",
-    "@types/node": "16.11.12",
-    "@types/uuid": "8.3.3",
-    "@types/xml": "1.0.6",
-    "@typescript-eslint/eslint-plugin": "^5.6.0",
-    "@typescript-eslint/parser": "^5.6.0",
-    "babel-eslint": "^10.1.0",
-    "babel-jest": "27.4.2",
-    "eslint": "^8.4.1",
-    "eslint-config-prettier": "8.3.0",
+    "@eslint/js": "^8.56.0",
+    "@babel/cli": "^7.22.0",
+    "@babel/core": "^7.22.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.22.0",
+    "@babel/plugin-transform-typescript": "^7.22.0",
+    "@babel/preset-env": "^7.22.0",
+    "@babel/preset-typescript": "^7.22.0",
+    "@types/jest": "^29.5.0",
+    "@types/mkdirp": "^1.0.2",
+    "@types/node": "^20.0.0",
+    "@types/uuid": "^9.0.0",
+    "@types/xml": "^1.0.6",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "typescript-eslint": "^7.0.0",
+    "babel-jest": "^29.5.0",
+    "eslint": "^8.40.0",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-formatter-json-relative": "^0.1.0",
-    "eslint-plugin-import": "^2.25.3",
-    "eslint-plugin-jest": "^25.3.0",
-    "eslint-plugin-prettier": "4.0.0",
-    "eslint-plugin-react": "^7.27.1",
-    "jest": "27.4.3",
-    "prettier": "2.5.1",
+    "eslint-plugin-import": "^2.28.0",
+    "eslint-plugin-jest": "^27.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "jest": "^29.5.0",
+    "prettier": "^3.0.0",
     "strip-ansi": "^7.0.1",
-    "ts-jest": "^27.1.1",
-    "typescript": "^4.5.3"
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.0.0"
   },
   "dependencies": {
     "mkdirp": "1.0.4",

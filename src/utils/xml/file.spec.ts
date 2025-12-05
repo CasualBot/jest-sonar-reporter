@@ -1,5 +1,5 @@
 import xml from 'xml';
-import file from './file';
+import { buildFile } from './file';
 
 describe('file', () => {
   test('<file path=""></file>', () => {
@@ -7,43 +7,40 @@ describe('file', () => {
     const mock = {
       testFilePath: 'test/FooTest.js',
       testResults: []
-    }
+    };
 
     // Act
-    const actualReport = xml(file(mock, false, null))
+    const actualReport = xml(buildFile(mock, false, null));
 
     // Assert
-    expect(actualReport).toMatchSnapshot()
-  })
+    expect(actualReport).toMatchSnapshot();
+  });
 
   test('testCase tag', () => {
     // Arrange
     const mock = {
       testFilePath: 'test/FooTest.js',
-      testResults: [
-        {title: 'lorem ipsum'},
-        {title: 'lorem ipsum'}
-      ]
-    }
+      testResults: [{ title: 'lorem ipsum' }, { title: 'lorem ipsum' }]
+    };
 
     // Act
-    const actualReport = xml(file(mock, false, null), true)
+    const actualReport = xml(buildFile(mock, false, null), true);
 
     // Assert
-    expect(actualReport).toMatchSnapshot()
-  })
+    expect(actualReport).toMatchSnapshot();
+  });
 
   test('testCase projectRoot', () => {
     // Arrange
     const mock = {
       testFilePath: 'test/FooTest.js',
       testResults: []
-    }
+    };
 
     // Act
-    const actualReport = xml(file(mock, true, 'test'), true)
+    const actualReport = xml(buildFile(mock, true, 'test'), true);
 
     // Assert
-    expect(actualReport).toMatchSnapshot()
-  })
-})
+    expect(actualReport).toMatchSnapshot();
+  });
+});

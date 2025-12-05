@@ -1,27 +1,27 @@
-import { failure } from "./failure";
+import { failure } from './failure';
+import type { TestResult } from '../../types';
 
-export const testCase = (testResult: any): any => {
-  let failures;
+/**
+ * Builds an XML test case element from test result data
+ * @param testResult The test result to convert
+ * @returns XML structure for a test case element with optional failure/skipped nodes
+ */
+export const testCase = (testResult: TestResult): any => {
   const aTestCase = {
     _attr: {
-      name: testResult.fullName || testResult.title,
-      duration: testResult.duration || 0
+      name: testResult.fullName ?? testResult.title,
+      duration: testResult.duration ?? 0
     }
-  }
+  };
 
   if (testResult.status === 'failed') {
-    failures = testResult.failureMessages.map(failure)
-    return {testCase: [aTestCase].concat(failures)}
-  } else if (testResult.status === 'pending') {
-    return {
-      testCase: [aTestCase].concat({
-        skipped: {
-          _attr: {
-            message: "Test skipped"
-          },
-        },
-      } as any),
-    };
+    const failures = testResult.failureMessages.map(failure);
+    return { testCase: [aTestCase, ...failures] as any };
   }
-  return {testCase: aTestCase}
-}
+
+  if (testResult.status === 'pending') {
+    return { testCase: [aTestCase, { skipped: {} }] as any };
+  }
+
+  return { testCase: aTestCase };
+};

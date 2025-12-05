@@ -1,51 +1,64 @@
 import xml from 'xml';
-const mkdirp = require('mkdirp'); // eslint-disable-line
-import * as fs from 'fs';
-import * as path from 'path';
-import buildXmlReport from './src/utils/buildXmlReport';
-import getOptions from './src/utils/getOptions';
-import getOutputPath from './src/utils/getOutputPath';
+import { sync as mkdirpSync } from 'mkdirp';
+import { writeFileSync } from 'fs';
+import { dirname } from 'path';
+import { buildXmlReport } from './src/utils/buildXmlReport';
+import { options as resolveOptions } from './src/utils/getOptions';
+import { getOutputPath } from './src/utils/getOutputPath';
+import type { JestGlobalConfig, AggregatedResult, ReporterOptions } from './src/types';
 
-const consoleBuffer: any = {};
+const consoleBuffer = new Map<string, any>();
 
-const processor = (report: any, reporterOptions: any = {}, jestRootDir = null) => {
-  const options = getOptions.options(reporterOptions);
+const processor = (
+  report: AggregatedResult,
+  reporterOptions: ReporterOptions = {},
+  jestRootDir: string | null = null
+): AggregatedResult => {
+  const options = resolveOptions(reporterOptions);
 
-  report.testResults.forEach((t: any, i: any) => {
-    t.console = consoleBuffer[t.testFilePath];
+  report.testResults.forEach((testSuite) => {
+    if (consoleBuffer.has(testSuite.testFilePath)) {
+      testSuite.console = consoleBuffer.get(testSuite.testFilePath);
+    }
   });
 
   const outputPath = getOutputPath(options, jestRootDir);
 
-  mkdirp.sync(path.dirname(outputPath));
+  mkdirpSync(dirname(outputPath));
 
-  fs.writeFileSync(outputPath, xml(buildXmlReport(report, options), {declaration: false, indent: ' '}));
+  writeFileSync(
+    outputPath,
+    xml(buildXmlReport(report, options), { declaration: false, indent: ' ' })
+  );
 
   return report;
 };
 
-function JestSonar(this: any, globalConfig: any, options: any): void {
+/**
+ * Jest Sonar Reporter - Main reporter class
+ * Implements the Jest reporter API to generate Sonar-compatible XML reports
+ */
+export default class JestSonar {
+  private readonly globalConfig: JestGlobalConfig;
+  private readonly reporterOptions: ReporterOptions;
 
-  if (globalConfig.hasOwnProperty('testResults')) { // eslint-disable-line
-    const newConfig = JSON.stringify({
-      reporters: ['@casualbot/jest-sonar-reporter']
-    }, null, 2);
+  constructor(globalConfig: JestGlobalConfig, reporterOptions: ReporterOptions = {}) {
+    if ('testResults' in globalConfig) {
+      processor(globalConfig as any);
+      return;
+    }
 
-    return processor(globalConfig);
+    this.globalConfig = globalConfig;
+    this.reporterOptions = reporterOptions;
   }
 
-  this._globalConfig = globalConfig;
-  this._options = options;
-
-  this.onTestResult = (test: any, testResult: any, aggregatedResult: any) => {
+  onTestResult(_test: any, testResult: any): void {
     if (testResult.console && testResult.console.length > 0) {
-      consoleBuffer[testResult.testFilePath] = testResult.console;
+      consoleBuffer.set(testResult.testFilePath, testResult.console);
     }
-  };
+  }
 
-  this.onRunComplete = (contexts: any, results: any) => {
-    processor(results, this._options, this._globalConfig.rootDir);
-  };
+  onRunComplete(_contexts: any, results: AggregatedResult): void {
+    processor(results, this.reporterOptions, this.globalConfig.rootDir ?? null);
+  }
 }
-
-module.exports = JestSonar;

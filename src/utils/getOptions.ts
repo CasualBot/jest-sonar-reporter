@@ -1,62 +1,78 @@
-// Copied from https://raw.githubusercontent.com/jest-community/jest-junit/master/utils/getOptions.js
-import * as path from 'path';
-import * as fs from 'fs';
+import { sep, join, dirname } from 'path';
+import { existsSync } from 'fs';
 import { v1 as uuid } from 'uuid';
 import constants from '../constants';
 import { replaceRootDirInPath } from './replaceRootDirInPath';
+import type { ReporterOptions } from '../types';
 
-function getEnvOptions() {
-  const options: any = {};
-  const setupConf: any = constants;
+/**
+ * Merges options from multiple sources: defaults, reporter options, app config, and environment variables
+ * This is the main public API for option resolution.
+ */
+export const options = (reporterOptions: ReporterOptions = {}): ReporterOptions => {
+  return {
+    ...constants.DEFAULT_OPTIONS,
+    ...reporterOptions,
+    ..._getAppOptions(process.cwd()),
+    ..._getEnvOptions()
+  };
+};
 
-  for (const name in setupConf.ENV_CONFIG_MAP) {
-    if (process.env[name]) {
-      options[setupConf.ENV_CONFIG_MAP[name] as any] = process.env[name];
-    }
-  }
+/**
+ * Generates a unique output filename with UUID
+ * @internal
+ */
+export const getUniqueOutputName = (): string => `jest-sonar-reporter-${uuid()}.xml`;
 
-  return options;
-}
+/**
+ * Replaces <rootDir> token in output paths
+ * @internal
+ */
+export const replaceRootDirInOutput = (rootDir: string | null, output: string): string =>
+  rootDir !== null ? replaceRootDirInPath(rootDir, output) : output;
 
-function getAppOptions(pathToResolve: any) {
-  let traversing = true;
+/**
+ * Reads configuration from package.json
+ * @internal
+ */
+const _getAppOptions = (pathToResolve: string): ReporterOptions => {
+  let currentPath = pathToResolve;
+  let shouldContinue = true;
 
-  // Find nearest package.json by traversing up directories until /
-  while(traversing) {
-    traversing = pathToResolve !== path.sep;
+  while (shouldContinue) {
+    shouldContinue = currentPath !== sep;
+    const pkgpath = join(currentPath, 'package.json');
 
-    const pkgpath = path.join(pathToResolve, 'package.json');
+    if (existsSync(pkgpath)) {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires, global-require
+      const pkg = require(pkgpath);
+      const appOptions = pkg['@casualbot/jest-sonar-reporter'];
 
-    if (fs.existsSync(pkgpath)) {
-      let options = (require(pkgpath) || {})['@casualbot/jest-sonar-reporter'];
-
-      if (Object.prototype.toString.call(options) !== '[object Object]') {
-        options = {};
+      if (typeof appOptions === 'object' && !Array.isArray(appOptions)) {
+        return appOptions;
       }
 
-      return options;
-    } else {
-      pathToResolve = path.dirname(pathToResolve);
+      return {};
     }
+
+    currentPath = dirname(currentPath);
   }
 
   return {};
-}
+};
 
-function replaceRootDirInOutput(rootDir: any, output: any) {
-  return rootDir !== null ? replaceRootDirInPath(rootDir, output) : output;
-}
+/**
+ * Reads configuration from environment variables
+ * @internal
+ */
+const _getEnvOptions = (): ReporterOptions => {
+  const envOptions: any = {};
 
-function getUniqueOutputName() {
-  return `jest-sonar-reporter-${uuid()}.xml`
-}
+  Object.entries(constants.ENV_CONFIG_MAP).forEach(([envName, optionKey]) => {
+    if (process.env[envName]) {
+      envOptions[optionKey] = process.env[envName];
+    }
+  });
 
-export default {
-  options: (reporterOptions = {}) => {
-    return Object.assign({}, constants.DEFAULT_OPTIONS, reporterOptions, getAppOptions(process.cwd()), getEnvOptions());
-  },
-  getAppOptions: getAppOptions,
-  getEnvOptions: getEnvOptions,
-  replaceRootDirInOutput: replaceRootDirInOutput,
-  getUniqueOutputName: getUniqueOutputName
+  return envOptions;
 };

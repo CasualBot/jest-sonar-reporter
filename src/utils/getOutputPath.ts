@@ -1,17 +1,24 @@
-import * as path from 'path';
-import getOptions from './getOptions';
+import { join } from 'path';
+import { replaceRootDirInOutput, getUniqueOutputName } from './getOptions';
+import type { ReporterOptions } from '../types';
 
-export default (options: any, jestRootDir: any)  => {
+/**
+ * Determines the output path for the Sonar XML report
+ * @param options Reporter options containing output configuration
+ * @param jestRootDir The Jest root directory (can be null)
+ * @returns The resolved output file path
+ */
+export const getOutputPath = (options: ReporterOptions, jestRootDir: string | null): string => {
   // Override outputName and outputDirectory with outputFile if outputFile is defined
-  let output = options.outputFile;
-  if (!output) {
-    // Set output to use new outputDirectory and fallback on original output
-    const outputName = (options.uniqueOutputName === 'true') ? getOptions.getUniqueOutputName() : options.outputName
-    output = getOptions.replaceRootDirInOutput(jestRootDir, options.outputDirectory);
-    const finalOutput = path.join(output, outputName);
-    return finalOutput;
+  const outputFile = options.outputFile;
+  if (outputFile) {
+    return replaceRootDirInOutput(jestRootDir, outputFile);
   }
-  
-  const finalOutput = getOptions.replaceRootDirInOutput(jestRootDir, output);
-  return finalOutput;
+
+  // Determine if we should use a unique output name
+  const shouldUseUniqueName = options.uniqueOutputName === true || options.uniqueOutputName === 'true';
+  const outputName = shouldUseUniqueName ? getUniqueOutputName() : (options.outputName || 'jest-sonar.xml');
+  const outputDir = replaceRootDirInOutput(jestRootDir, options.outputDirectory || '');
+
+  return join(outputDir, outputName);
 };

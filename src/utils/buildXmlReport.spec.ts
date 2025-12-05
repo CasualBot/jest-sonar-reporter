@@ -1,22 +1,22 @@
 import xml from 'xml';
-import buildXmlReport from './buildXmlReport';
+import { buildXmlReport } from './buildXmlReport';
 
 describe('buildXmlReport', () => {
   test('root: <buildXmlReport version="1"> when not formatted for sonar 5.6.x', () => {
-    const mock = {testResults: []}
+    const mock = { testResults: [] };
 
-    const actualReport = xml(buildXmlReport(mock, false))
+    const actualReport = xml(buildXmlReport(mock, { formatForSonar56: false }));
 
-    expect(actualReport).toMatchSnapshot()
-  })
+    expect(actualReport).toMatchSnapshot();
+  });
 
   test('root: <unitTest version="1"> when formatted for sonar 5.6.x', () => {
-    const mock = {testResults: []}
+    const mock = { testResults: [] };
 
-    const actualReport = xml(buildXmlReport(mock, true))
+    const actualReport = xml(buildXmlReport(mock, { formatForSonar56: true }));
 
-    expect(actualReport).toMatchSnapshot()
-  })
+    expect(actualReport).toMatchSnapshot();
+  });
 
   test('file tag', () => {
     const mock = {
@@ -30,12 +30,12 @@ describe('buildXmlReport', () => {
           testResults: []
         }
       ]
-    }
+    };
 
-    const actualReport = xml(buildXmlReport(mock), true)
+    const actualReport = xml(buildXmlReport(mock), true);
 
-    expect(actualReport).toMatchSnapshot()
-  })
+    expect(actualReport).toMatchSnapshot();
+  });
 
   test('full report', () => {
     const mock = {
@@ -56,7 +56,7 @@ describe('buildXmlReport', () => {
               duration: 5,
               failureMessages: ['Lorem ipsum'],
               fullName: 'lorem ipsum',
-              status: 'failed',
+              status: 'failed'
             }
           ]
         },
@@ -66,15 +66,15 @@ describe('buildXmlReport', () => {
             {
               duration: 5,
               fullName: 'Skipped test',
-              status: 'pending',
+              status: 'pending'
             }
           ]
         }
       ]
-    }
+    };
 
-    const actualReport = xml(buildXmlReport(mock), true)
+    const actualReport = xml(buildXmlReport(mock), true);
 
-    expect(actualReport).toMatchSnapshot()
-  })
-})
+    expect(actualReport).toMatchSnapshot();
+  });
+});
