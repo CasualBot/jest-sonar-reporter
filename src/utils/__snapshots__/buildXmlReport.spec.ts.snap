@@ -21,7 +21,7 @@ exports[`buildXmlReport full report 1`] = `
     </file>
     <file path=\\"test/BazTest.js\\">
         <testCase name=\\"Skipped test\\" duration=\\"5\\">
-            <skipped/>
+            <skipped message=\\"Test skipped\\"/>
         </testCase>
     </file>
 </testExecutions>"

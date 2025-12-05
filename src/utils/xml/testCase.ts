@@ -13,7 +13,15 @@ export const testCase = (testResult: any): any => {
     failures = testResult.failureMessages.map(failure)
     return {testCase: [aTestCase].concat(failures)}
   } else if (testResult.status === 'pending') {
-    return {testCase: [aTestCase].concat({ skipped: {} } as any)};
+    return {
+      testCase: [aTestCase].concat({
+        skipped: {
+          _attr: {
+            message: "Test skipped"
+          },
+        },
+      } as any),
+    };
   }
   return {testCase: aTestCase}
 }
