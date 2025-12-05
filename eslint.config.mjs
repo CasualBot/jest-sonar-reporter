@@ -1,11 +1,11 @@
-const js = require('@eslint/js');
-const tseslint = require('typescript-eslint');
-const jestPlugin = require('eslint-plugin-jest');
-const prettierConfig = require('eslint-config-prettier');
+import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import jestPlugin from 'eslint-plugin-jest';
+import prettierConfig from 'eslint-config-prettier';
 
-module.exports = tseslint.config(
+export default tseslint.config(
   {
-    ignores: ['lib/', 'node_modules/', '*.config.js', 'babel.config.js', 'index.d.ts', '**/*.spec.ts']
+    ignores: ['lib/', 'node_modules/', '*.config.js', '*.config.mjs', 'babel.config.js', 'index.d.ts', '**/*.spec.ts']
   },
   {
     files: ['**/*.ts'],
