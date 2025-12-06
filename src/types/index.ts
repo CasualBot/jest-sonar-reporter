@@ -40,6 +40,7 @@ export interface TestResult {
   status: 'passed' | 'failed' | 'pending' | 'todo' | 'error';
   title?: string;
   fullName?: string;
+  pendingReason?: string;
 }
 
 export interface TestSuiteResult {

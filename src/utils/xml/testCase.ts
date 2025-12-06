@@ -1,4 +1,5 @@
 import { failure } from './failure';
+import { skipped } from './skipped';
 import type { TestResult } from '../../types';
 
 /**
@@ -20,7 +21,8 @@ export const testCase = (testResult: TestResult): any => {
   }
 
   if (testResult.status === 'pending') {
-    return { testCase: [aTestCase, { skipped: {} }] as any };
+    const skipElement = skipped(testResult.pendingReason);
+    return { testCase: [aTestCase, skipElement] as any };
   }
 
   return { testCase: aTestCase };

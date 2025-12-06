@@ -9,7 +9,13 @@ exports[`testCase failing test case 1`] = `
 `;
 
 exports[`testCase skipped test case 1`] = `
-"<testCase name=\\"lorem ipsum\\" duration=\\"0\\">
-    <skipped message=\\"Test skipped\\"/>
+"<testCase name="lorem ipsum" duration="0">
+    <skipped message=""/>
+</testCase>"
+`;
+
+exports[`testCase skipped test case with reason 1`] = `
+"<testCase name="lorem ipsum" duration="0">
+    <skipped message="Pending reason message"/>
 </testCase>"
 `;

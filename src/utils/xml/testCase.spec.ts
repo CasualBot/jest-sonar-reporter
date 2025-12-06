@@ -44,4 +44,20 @@ describe('testCase', () => {
     // Assert
     expect(actualReport).toMatchSnapshot()
   })
+
+  test('skipped test case with reason', () => {
+    // Arrange
+    const mock = {
+      status: 'pending',
+      title: 'lorem ipsum',
+      pendingReason: 'Pending reason message'
+    }
+
+    // Act
+    const actualReport = xml(testCase(mock), true)
+
+    // Assert
+    expect(actualReport).toMatchSnapshot()
+  })
 })
+
