@@ -3,7 +3,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jest-sonar-reporter&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jest-sonar-reporter)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=jest-sonar-reporter&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=jest-sonar-reporter)
 
-[![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-dark.svg)](https://sonarcloud.io/summary/new_code?id=CasualBot_jest-sonar-reporter)
+[![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-dark.svg)](https://sonarcloud.io/summary/new_code?id=jest-sonar-reporter)
 
 
 `@casualbot/jest-sonar-reporter` is a custom results processor for Jest derived from Christian W. original work [here](https://github.com/3dmind/jest-sonar-reporter).
