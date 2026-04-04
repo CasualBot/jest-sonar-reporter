@@ -37,7 +37,8 @@ function getAppOptions(pathToResolve: any) {
       let options;
 
       try {
-        options = (require(pkgpath) || {})['@casualbot/jest-sonar-reporter'];
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        options = require(pkgpath)?.['@casualbot/jest-sonar-reporter'];
       } catch (error) {
         console.warn(`Unable to import package.json to get reporter options: ${error}`);
       }
