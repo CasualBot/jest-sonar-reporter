@@ -59,6 +59,8 @@ jobs:
 
       - name: Publish to npm
         run: npm publish --access public --provenance ${{ inputs.dry_run && '--dry-run' || '' }}
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Push version commit and tag
         if: inputs.dry_run == false
