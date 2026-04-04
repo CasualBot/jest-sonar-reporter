@@ -22,6 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Publish (${{ inputs.bump }})
     if: github.actor == 'CasualBot' && github.ref == 'refs/heads/main'
+    permissions:
+      id-token: write
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -56,9 +59,7 @@ jobs:
         run: npm run build
 
       - name: Publish to npm
-        run: npm publish --access public ${{ inputs.dry_run && '--dry-run' || '' }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public --provenance ${{ inputs.dry_run && '--dry-run' || '' }}
 
       - name: Push version commit and tag
         if: inputs.dry_run == false
