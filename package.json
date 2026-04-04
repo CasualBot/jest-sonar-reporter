@@ -1,6 +1,6 @@
 {
   "name": "@casualbot/jest-sonar-reporter",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "A Sonar test reporter for Jest.",
   "keywords": [
     "sonar",
@@ -16,7 +16,10 @@
     "typescript"
   ],
   "main": "lib/index.js",
-  "files": [ "lib", "lib/src" ],
+  "files": [
+    "lib",
+    "lib/src"
+  ],
   "scripts": {
     "test": "tsc --module commonjs && jest",
     "test:watch": "jest --watch",
