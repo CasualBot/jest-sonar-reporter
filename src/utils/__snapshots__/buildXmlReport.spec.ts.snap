@@ -1,32 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`buildXmlReport file tag 1`] = `
-"<testExecutions version="1">
-    <file path="test/FooTest.js">
+"<testExecutions version=\\"1\\">
+    <file path=\\"test/FooTest.js\\">
     </file>
-    <file path="test/BarTest.js">
+    <file path=\\"test/BarTest.js\\">
     </file>
 </testExecutions>"
 `;
 
 exports[`buildXmlReport full report 1`] = `
-"<testExecutions version="1">
-    <file path="test/FooTest.js">
-        <testCase name="lorem ipsum" duration="5"/>
+"<testExecutions version=\\"1\\">
+    <file path=\\"test/FooTest.js\\">
+        <testCase name=\\"lorem ipsum\\" duration=\\"5\\"/>
     </file>
-    <file path="test/BarTest.js">
-        <testCase name="lorem ipsum" duration="5">
-            <failure message="Lorem ipsum"><![CDATA[Lorem ipsum]]></failure>
+    <file path=\\"test/BarTest.js\\">
+        <testCase name=\\"lorem ipsum\\" duration=\\"5\\">
+            <failure message=\\"Lorem ipsum\\"><![CDATA[Lorem ipsum]]></failure>
         </testCase>
     </file>
-    <file path="test/BazTest.js">
-        <testCase name="Skipped test" duration="5">
-            <skipped message="Test skipped"/>
+    <file path=\\"test/BazTest.js\\">
+        <testCase name=\\"Skipped test\\" duration=\\"5\\">
+            <skipped message=\\"Test skipped\\"/>
         </testCase>
     </file>
 </testExecutions>"
 `;
 
-exports[`buildXmlReport root: <buildXmlReport version="1"> when not formatted for sonar 5.6.x 1`] = `"<testExecutions version="1"></testExecutions>"`;
+exports[`buildXmlReport root: <buildXmlReport version="1"> when not formatted for sonar 5.6.x 1`] = `"<testExecutions version=\\"1\\"></testExecutions>"`;
 
-exports[`buildXmlReport root: <unitTest version="1"> when formatted for sonar 5.6.x 1`] = `"<testExecutions version="1"></testExecutions>"`;
+exports[`buildXmlReport root: <unitTest version="1"> when formatted for sonar 5.6.x 1`] = `"<testExecutions version=\\"1\\"></testExecutions>"`;
