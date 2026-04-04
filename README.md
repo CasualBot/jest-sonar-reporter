@@ -1,7 +1,7 @@
 # Jest Sonar Reporter
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=CasualBot_jest-sonar-reporter&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=CasualBot_jest-sonar-reporter)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=CasualBot_jest-sonar-reporter&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=CasualBot_jest-sonar-reporter)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jest-sonar-reporter&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jest-sonar-reporter)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=jest-sonar-reporter&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=jest-sonar-reporter)
 
 [![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-dark.svg)](https://sonarcloud.io/summary/new_code?id=CasualBot_jest-sonar-reporter)
 
