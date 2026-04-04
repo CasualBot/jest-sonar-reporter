@@ -21,14 +21,26 @@ function getEnvOptions() {
 function getAppOptions(pathToResolve: any) {
   let traversing = true;
 
-  // Find nearest package.json by traversing up directories until /
+  // Get the root dir to detect when we reached the end of our search.
+  // path.parse().root handles both Unix ('/') and Windows ('C:\') roots,
+  // fixing a non-terminating loop when no package.json exists on Windows.
+  // See: https://github.com/jest-community/jest-junit/pull/215
+  const rootDir = path.parse(pathToResolve).root;
+
+  // Find nearest package.json by traversing up directories until root
   while(traversing) {
-    traversing = pathToResolve !== path.sep;
+    traversing = pathToResolve !== rootDir;
 
     const pkgpath = path.join(pathToResolve, 'package.json');
 
     if (fs.existsSync(pkgpath)) {
-      let options = (require(pkgpath) || {})['@casualbot/jest-sonar-reporter'];
+      let options;
+
+      try {
+        options = (require(pkgpath) || {})['@casualbot/jest-sonar-reporter'];
+      } catch (error) {
+        console.warn(`Unable to import package.json to get reporter options: ${error}`);
+      }
 
       if (Object.prototype.toString.call(options) !== '[object Object]') {
         options = {};
