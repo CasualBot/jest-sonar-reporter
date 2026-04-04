@@ -35,6 +35,10 @@
     "url": "https://github.com/CasualBot/jest-sonar-reporter/issues"
   },
   "homepage": "https://github.com/CasualBot/jest-sonar-reporter#readme",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "engines": {
     "node": ">=14.0.0"
   },

@@ -34,7 +34,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x
+          node-version: 24.x
           cache: 'npm'
 
       - name: Install dependencies
@@ -58,9 +58,9 @@ jobs:
         run: npm run build
 
       - name: Publish to npm
-        run: npm publish --access public --provenance ${{ inputs.dry_run && '--dry-run' || '' }}
+        run: npm publish ${{ inputs.dry_run && '--dry-run' || '' }}
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
 
       - name: Push version commit and tag
         if: inputs.dry_run == false
