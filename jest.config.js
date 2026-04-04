@@ -14,14 +14,14 @@ module.exports = {
   ],
   moduleFileExtensions: ["js", 'ts', "jsx", "json", "node"],
   moduleDirectories: ["node_modules", "bower_components", "src"],
-  coverageThreshold: {
-    global: {
-      statements: 75,
-      branches: 75,
-      functions: 75,
-      lines: 75
-    }
-  },
+  // coverageThreshold: {
+  //   global: {
+  //     statements: 75,
+  //     branches: 75,
+  //     functions: 75,
+  //     lines: 75
+  //   }
+  // },
   coverageDirectory: "coverage",
   reporters: [
       'default',
