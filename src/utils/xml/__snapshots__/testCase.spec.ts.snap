@@ -8,7 +8,19 @@ exports[`testCase failing test case 1`] = `
 </testCase>"
 `;
 
-exports[`testCase skipped test case 1`] = `
+exports[`testCase skipped test case (it.skip) 1`] = `
+"<testCase name=\\"lorem ipsum\\" duration=\\"0\\">
+    <skipped message=\\"Test skipped\\"/>
+</testCase>"
+`;
+
+exports[`testCase skipped test case (pending) 1`] = `
+"<testCase name=\\"lorem ipsum\\" duration=\\"0\\">
+    <skipped message=\\"Test skipped\\"/>
+</testCase>"
+`;
+
+exports[`testCase skipped test case (todo) 1`] = `
 "<testCase name=\\"lorem ipsum\\" duration=\\"0\\">
     <skipped message=\\"Test skipped\\"/>
 </testCase>"

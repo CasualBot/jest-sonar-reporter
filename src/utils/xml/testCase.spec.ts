@@ -31,10 +31,38 @@ describe('testCase', () => {
     expect(actualReport).toMatchSnapshot()
   })
 
-  test('skipped test case', () => {
+  test('skipped test case (pending)', () => {
     // Arrange
     const mock = {
       status: 'pending',
+      title: 'lorem ipsum'
+    }
+
+    // Act
+    const actualReport = xml(testCase(mock), true)
+
+    // Assert
+    expect(actualReport).toMatchSnapshot()
+  })
+
+  test('skipped test case (it.skip)', () => {
+    // Arrange
+    const mock = {
+      status: 'skipped',
+      title: 'lorem ipsum'
+    }
+
+    // Act
+    const actualReport = xml(testCase(mock), true)
+
+    // Assert
+    expect(actualReport).toMatchSnapshot()
+  })
+
+  test('skipped test case (todo)', () => {
+    // Arrange
+    const mock = {
+      status: 'todo',
       title: 'lorem ipsum'
     }
 
