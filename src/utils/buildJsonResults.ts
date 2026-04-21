@@ -1,5 +1,5 @@
 // Copied from https://raw.githubusercontent.com/jest-community/jest-junit/master/utils/buildJsonResults.js
-import stripAnsi from 'strip-ansi';
+import { stripVTControlCharacters as stripAnsi } from 'util';
 import constants from '../constants'; 
 import * as path from 'path';
 import * as fs from 'fs';

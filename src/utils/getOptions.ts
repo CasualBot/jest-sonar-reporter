@@ -1,7 +1,7 @@
 // Copied from https://raw.githubusercontent.com/jest-community/jest-junit/master/utils/getOptions.js
 import * as path from 'path';
 import * as fs from 'fs';
-import { v1 as uuid } from 'uuid';
+import { randomUUID } from 'crypto';
 import constants from '../constants';
 import { replaceRootDirInPath } from './replaceRootDirInPath';
 
@@ -61,7 +61,7 @@ function replaceRootDirInOutput(rootDir: any, output: any) {
 }
 
 function getUniqueOutputName() {
-  return `jest-sonar-reporter-${uuid()}.xml`
+  return `jest-sonar-reporter-${randomUUID()}.xml`
 }
 
 export default {

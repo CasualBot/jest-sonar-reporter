@@ -1,5 +1,4 @@
 import xml from 'xml';
-const mkdirp = require('mkdirp'); // eslint-disable-line
 import * as fs from 'fs';
 import * as path from 'path';
 import buildXmlReport from './src/utils/buildXmlReport';
@@ -17,7 +16,7 @@ const processor = (report: any, reporterOptions: any = {}, jestRootDir = null) =
 
   const outputPath = getOutputPath(options, jestRootDir);
 
-  mkdirp.sync(path.dirname(outputPath));
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 
   fs.writeFileSync(outputPath, xml(buildXmlReport(report, options), {declaration: false, indent: ' '}));
 
