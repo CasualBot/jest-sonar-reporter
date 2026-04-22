@@ -43,7 +43,7 @@ function getAppOptions(pathToResolve: string): Partial<ReporterOptions> {
 
       try {
         const pkg = JSON.parse(fs.readFileSync(pkgpath, 'utf8')) as Record<string, unknown>;
-        const pkgOptions = pkg?.['@casualbot/jest-sonar-reporter'];
+        const pkgOptions = pkg['@casualbot/jest-sonar-reporter'];
         if (Object.prototype.toString.call(pkgOptions) === '[object Object]') {
           options = pkgOptions as Partial<ReporterOptions>;
         }
