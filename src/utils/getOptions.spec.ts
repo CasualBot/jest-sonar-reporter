@@ -1,6 +1,24 @@
 import * as path from 'path';
 import getOptions from './getOptions';
 
+const originalEnv = process.env;
+
+function resetEnv() {
+  process.env = { ...originalEnv };
+}
+
+function clearJestEnv() {
+  for (const name of Object.keys(process.env)) {
+    if (name.startsWith('JEST_')) {
+      delete process.env[name];
+    }
+  }
+}
+
+afterAll(() => {
+  process.env = originalEnv;
+});
+
 // Regression test for https://github.com/CasualBot/jest-sonar-reporter/issues/27
 // On Windows, path.sep is '\' but the filesystem root is 'C:\', so the old loop
 // condition (pathToResolve !== path.sep) never matched and looped forever.
@@ -30,22 +48,10 @@ describe('getAppOptions', () => {
 });
 
 describe('getEnvOptions', () => {
-  const originalEnv = process.env;
-
-  beforeEach(() => {
-    process.env = { ...originalEnv };
-  });
-
-  afterAll(() => {
-    process.env = originalEnv;
-  });
+  beforeEach(resetEnv);
 
   it('returns an empty object when no known env vars are set', () => {
-    for (const name of Object.keys(process.env)) {
-      if (name.startsWith('JEST_')) {
-        delete process.env[name];
-      }
-    }
+    clearJestEnv();
     expect(getOptions.getEnvOptions()).toEqual({});
   });
 
@@ -85,19 +91,9 @@ describe('replaceRootDirInOutput', () => {
 });
 
 describe('options', () => {
-  const originalEnv = process.env;
-
   beforeEach(() => {
-    process.env = { ...originalEnv };
-    for (const name of Object.keys(process.env)) {
-      if (name.startsWith('JEST_')) {
-        delete process.env[name];
-      }
-    }
-  });
-
-  afterAll(() => {
-    process.env = originalEnv;
+    resetEnv();
+    clearJestEnv();
   });
 
   it('merges defaults with reporter options', () => {

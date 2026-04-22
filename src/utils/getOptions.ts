@@ -12,7 +12,7 @@ function getEnvOptions(): Partial<ReporterOptions> {
   const options: Partial<Record<keyof ReporterOptions, string>> = {};
   const envConfigMap = constants.ENV_CONFIG_MAP as EnvConfigMap;
 
-  for (const name in envConfigMap) {
+  for (const name of Object.keys(envConfigMap)) {
     if (process.env[name]) {
       options[envConfigMap[name]] = process.env[name];
     }
@@ -66,11 +66,14 @@ function getUniqueOutputName(): string {
 }
 
 export default {
-  options: (reporterOptions: Partial<ReporterOptions> = {}): ReporterOptions => {
-    return Object.assign({}, constants.DEFAULT_OPTIONS, reporterOptions, getAppOptions(process.cwd()), getEnvOptions()) as ReporterOptions;
-  },
-  getAppOptions: getAppOptions,
-  getEnvOptions: getEnvOptions,
-  replaceRootDirInOutput: replaceRootDirInOutput,
-  getUniqueOutputName: getUniqueOutputName
+  options: (reporterOptions: Partial<ReporterOptions> = {}): ReporterOptions => ({
+    ...constants.DEFAULT_OPTIONS,
+    ...reporterOptions,
+    ...getAppOptions(process.cwd()),
+    ...getEnvOptions(),
+  }) as ReporterOptions,
+  getAppOptions,
+  getEnvOptions,
+  replaceRootDirInOutput,
+  getUniqueOutputName,
 };
