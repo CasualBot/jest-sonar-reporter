@@ -6,8 +6,8 @@ const SKIPPED_STATUSES = new Set(['pending', 'skipped', 'todo']);
 export const testCase = (testResult: TestCaseInput): XmlLeaf => {
   const aTestCase = {
     _attr: {
-      name: testResult.fullName || testResult.title,
-      duration: testResult.duration || 0
+      name: testResult.fullName ?? testResult.title,
+      duration: testResult.duration ?? 0
     }
   }
   const head: XmlLeaf[] = [aTestCase];
