@@ -58,7 +58,7 @@ describe('getEnvOptions', () => {
   it('maps recognized env vars to reporter option keys', () => {
     process.env.JEST_SUITE_NAME = 'my suite';
     process.env.JEST_SONAR_OUTPUT_DIR = 'out-dir';
-    const result = getOptions.getEnvOptions() as Record<string, string>;
+    const result = getOptions.getEnvOptions();
     expect(result.suiteName).toBe('my suite');
     expect(result.outputDirectory).toBe('out-dir');
   });

@@ -7,18 +7,20 @@ import { replaceRootDirInPath } from './replaceRootDirInPath';
 import type { ReporterOptions } from '../types';
 
 type EnvConfigMap = Record<string, keyof ReporterOptions>;
+type EnvOptions = Partial<Record<keyof ReporterOptions, string>>;
 
-function getEnvOptions(): Partial<ReporterOptions> {
-  const options: Partial<Record<keyof ReporterOptions, string>> = {};
+function getEnvOptions(): EnvOptions {
+  const options: EnvOptions = {};
   const envConfigMap = constants.ENV_CONFIG_MAP as EnvConfigMap;
 
   for (const name of Object.keys(envConfigMap)) {
-    if (process.env[name]) {
-      options[envConfigMap[name]] = process.env[name];
+    const value = process.env[name];
+    if (value) {
+      options[envConfigMap[name]] = value;
     }
   }
 
-  return options as unknown as Partial<ReporterOptions>;
+  return options;
 }
 
 function getAppOptions(pathToResolve: string): Partial<ReporterOptions> {
