@@ -1,7 +1,8 @@
 import * as path from 'path';
 import getOptions from './getOptions';
+import type { ReporterOptions } from '../types';
 
-export default (options: any, jestRootDir: any)  => {
+export default (options: ReporterOptions, jestRootDir: string | null): string => {
   // Override outputName and outputDirectory with outputFile if outputFile is defined
   let output = options.outputFile;
   if (!output) {
@@ -11,7 +12,7 @@ export default (options: any, jestRootDir: any)  => {
     const finalOutput = path.join(output, outputName);
     return finalOutput;
   }
-  
+
   const finalOutput = getOptions.replaceRootDirInOutput(jestRootDir, output);
   return finalOutput;
 };

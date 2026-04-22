@@ -4,21 +4,24 @@ import * as fs from 'fs';
 import { randomUUID } from 'crypto';
 import constants from '../constants';
 import { replaceRootDirInPath } from './replaceRootDirInPath';
+import type { ReporterOptions } from '../types';
 
-function getEnvOptions() {
-  const options: any = {};
-  const setupConf: any = constants;
+type EnvConfigMap = Record<string, keyof ReporterOptions>;
 
-  for (const name in setupConf.ENV_CONFIG_MAP) {
+function getEnvOptions(): Partial<ReporterOptions> {
+  const options: Partial<Record<keyof ReporterOptions, string>> = {};
+  const envConfigMap = constants.ENV_CONFIG_MAP as EnvConfigMap;
+
+  for (const name in envConfigMap) {
     if (process.env[name]) {
-      options[setupConf.ENV_CONFIG_MAP[name] as any] = process.env[name];
+      options[envConfigMap[name]] = process.env[name];
     }
   }
 
-  return options;
+  return options as unknown as Partial<ReporterOptions>;
 }
 
-function getAppOptions(pathToResolve: any) {
+function getAppOptions(pathToResolve: string): Partial<ReporterOptions> {
   let traversing = true;
 
   // Get the root dir to detect when we reached the end of our search.
@@ -34,11 +37,11 @@ function getAppOptions(pathToResolve: any) {
     const pkgpath = path.join(pathToResolve, 'package.json');
 
     if (fs.existsSync(pkgpath)) {
-      let options;
+      let options: Partial<ReporterOptions> | undefined;
 
       try {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        options = require(pkgpath)?.['@casualbot/jest-sonar-reporter'];
+        const pkg = JSON.parse(fs.readFileSync(pkgpath, 'utf8')) as Record<string, unknown>;
+        options = pkg?.['@casualbot/jest-sonar-reporter'] as Partial<ReporterOptions> | undefined;
       } catch (error) {
         console.warn(`Unable to import package.json to get reporter options: ${error}`);
       }
@@ -47,7 +50,7 @@ function getAppOptions(pathToResolve: any) {
         options = {};
       }
 
-      return options;
+      return options ?? {};
     } else {
       pathToResolve = path.dirname(pathToResolve);
     }
@@ -56,17 +59,17 @@ function getAppOptions(pathToResolve: any) {
   return {};
 }
 
-function replaceRootDirInOutput(rootDir: any, output: any) {
+function replaceRootDirInOutput(rootDir: string | null, output: string): string {
   return rootDir !== null ? replaceRootDirInPath(rootDir, output) : output;
 }
 
-function getUniqueOutputName() {
+function getUniqueOutputName(): string {
   return `jest-sonar-reporter-${randomUUID()}.xml`
 }
 
 export default {
-  options: (reporterOptions = {}) => {
-    return Object.assign({}, constants.DEFAULT_OPTIONS, reporterOptions, getAppOptions(process.cwd()), getEnvOptions());
+  options: (reporterOptions: Partial<ReporterOptions> = {}): ReporterOptions => {
+    return Object.assign({}, constants.DEFAULT_OPTIONS, reporterOptions, getAppOptions(process.cwd()), getEnvOptions()) as ReporterOptions;
   },
   getAppOptions: getAppOptions,
   getEnvOptions: getEnvOptions,

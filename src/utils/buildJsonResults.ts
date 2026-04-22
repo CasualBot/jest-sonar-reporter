@@ -1,14 +1,32 @@
 // Copied from https://raw.githubusercontent.com/jest-community/jest-junit/master/utils/buildJsonResults.js
 import { stripVTControlCharacters as stripAnsi } from 'util';
-import constants from '../constants'; 
+import type { AggregatedResult, AssertionResult, TestResult } from '@jest/test-result';
+import type { LogEntry } from '@jest/console';
+import constants from '../constants';
 import * as path from 'path';
 import * as fs from 'fs';
+import type { ReporterOptions, TemplateFunction, XmlLeaf } from '../types';
 
-const toTemplateTag = function (varName: string) {
+type SuiteNameVariables = Record<string, string>;
+
+interface TestSuitesHeaderAttrs {
+  name: string;
+  tests: number;
+  failures: number;
+  errors: number;
+  skipped: number;
+  time: number;
+}
+
+interface TestSuitesRoot {
+  testsuites: [{ _attr: TestSuitesHeaderAttrs }, ...XmlLeaf[]];
+}
+
+const toTemplateTag = function (varName: string): string {
   return "{" + varName + "}";
 }
 
-const replaceVars = function (strOrFunc: any, variables: any) {
+const replaceVars = function (strOrFunc: string | TemplateFunction, variables: SuiteNameVariables): string {
   if (typeof strOrFunc === 'string') {
     let str = strOrFunc;
     Object.keys(variables).forEach((varName) => {
@@ -25,23 +43,24 @@ const replaceVars = function (strOrFunc: any, variables: any) {
   }
 };
 
-const executionTime = function (startTime: any, endTime: any) {
+const executionTime = function (startTime: number, endTime: number): number {
   return (endTime - startTime) / 1000;
 }
 
-const addErrorTestResult = function (suite: any) {
+const addErrorTestResult = function (suite: TestResult): void {
   suite.testResults.push({
-    "ancestorTitles": [],
-    "duration": 0,
-    "failureMessages": [
-      suite.failureMessage
-    ],
-    "numPassingAsserts": 0,
-    "status": "error"
-  })
+    ancestorTitles: [],
+    duration: 0,
+    failureMessages: [suite.failureMessage ?? ''],
+    numPassingAsserts: 0,
+    status: "error",
+  } as unknown as AssertionResult);
 }
 
-export default (report: any, appDirectory: any, options: any): any => {
+type SuiteProperties = Record<string, string | TemplateFunction>;
+type SuitePropertiesFactory = (suite: TestResult) => SuiteProperties;
+
+export default (report: AggregatedResult, appDirectory: string, options: ReporterOptions): TestSuitesRoot => {
   const junitSuitePropertiesFilePath = path.join(process.cwd(), options.testSuitePropertiesFile);
   const ignoreSuitePropertiesCheck = !fs.existsSync(junitSuitePropertiesFilePath);
 
@@ -55,7 +74,7 @@ export default (report: any, appDirectory: any, options: any): any => {
   }
 
   // Generate a single XML file for all jest tests
-  const jsonResults = {
+  const jsonResults: TestSuitesRoot = {
     'testsuites': [{
       '_attr': {
         'name': options.suiteName,
@@ -72,19 +91,19 @@ export default (report: any, appDirectory: any, options: any): any => {
   };
 
   // Iterate through outer testResults (test suites)
-  report.testResults.forEach((suite: any) => {
+  report.testResults.forEach((suite: TestResult) => {
     const noResults = suite.testResults.length === 0;
-    if (noResults && options.reportTestSuiteErrors === 'false') {
+    if (noResults && (options.reportTestSuiteErrors as string) === 'false') {
       return;
     }
 
-    const noResultOptions = noResults ? {
+    const noResultOptions: Partial<ReporterOptions> = noResults ? {
       suiteNameTemplate: toTemplateTag(constants.FILEPATH_VAR),
       titleTemplate: toTemplateTag(constants.FILEPATH_VAR),
       classNameTemplate: `Test suite failed to run`
     } : {};
 
-    const suiteOptions = Object.assign({}, options, noResultOptions);
+    const suiteOptions: ReporterOptions = Object.assign({}, options, noResultOptions);
     if (noResults) {
       addErrorTestResult(suite);
     }
@@ -98,18 +117,18 @@ export default (report: any, appDirectory: any, options: any): any => {
       : suite.displayName;
 
     // Build replacement map
-    const suiteNameVariables: string | any = {};
+    const suiteNameVariables: SuiteNameVariables = {};
     suiteNameVariables[constants.FILEPATH_VAR] = filepath;
     suiteNameVariables[constants.FILENAME_VAR] = filename;
     suiteNameVariables[constants.TITLE_VAR] = suiteTitle;
-    suiteNameVariables[constants.DISPLAY_NAME_VAR] = displayName;
+    suiteNameVariables[constants.DISPLAY_NAME_VAR] = displayName ?? '';
 
     // Add <testsuite /> properties
     const suiteNumTests = suite.numFailingTests + suite.numPassingTests + suite.numPendingTests;
     const suiteExecutionTime = executionTime(suite.perfStats.start, suite.perfStats.end);
 
     const suiteErrors = noResults ? 1 : 0;
-    const testSuite = {
+    const testSuite: { testsuite: XmlLeaf[] } = {
       testsuite: [{
         _attr: {
           name: replaceVars(suiteOptions.suiteNameTemplate, suiteNameVariables),
@@ -130,15 +149,16 @@ export default (report: any, appDirectory: any, options: any): any => {
     jsonResults.testsuites[0]._attr.tests += suiteNumTests;
 
     if (!ignoreSuitePropertiesCheck) {
-      const junitSuiteProperties = require(junitSuitePropertiesFilePath)(suite); // eslint-disable-line 
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const junitSuiteProperties = (require(junitSuitePropertiesFilePath) as SuitePropertiesFactory)(suite);
 
       // Add any test suite properties
-      const testSuitePropertyMain: any = {
+      const testSuitePropertyMain: { properties: XmlLeaf[] } = {
         properties: []
       };
 
       Object.keys(junitSuiteProperties).forEach((p) => {
-        const testSuiteProperty: any = {
+        const testSuiteProperty: XmlLeaf = {
           property: {
             _attr: {
               name: p,
@@ -154,41 +174,42 @@ export default (report: any, appDirectory: any, options: any): any => {
     }
 
     // Iterate through test cases
-    suite.testResults.forEach((tc: any) => {
+    suite.testResults.forEach((tc: AssertionResult) => {
       const classname = tc.ancestorTitles.join(suiteOptions.ancestorSeparator);
       const testTitle = tc.title;
 
       // Build replacement map
-      const testVariables: string | any = {};
+      const testVariables: SuiteNameVariables = {};
       testVariables[constants.FILEPATH_VAR] = filepath;
       testVariables[constants.FILENAME_VAR] = filename;
       testVariables[constants.SUITENAME_VAR] = suiteTitle;
       testVariables[constants.CLASSNAME_VAR] = classname;
       testVariables[constants.TITLE_VAR] = testTitle;
-      testVariables[constants.DISPLAY_NAME_VAR] = displayName;
+      testVariables[constants.DISPLAY_NAME_VAR] = displayName ?? '';
 
-      const testCase: any = {
+      const testCase: { testcase: Array<{ _attr: Record<string, string | number> } | XmlLeaf> } = {
         'testcase': [{
           _attr: {
             classname: replaceVars(suiteOptions.classNameTemplate, testVariables),
             name: replaceVars(suiteOptions.titleTemplate, testVariables),
-            time: tc.duration / 1000,
+            time: (tc.duration ?? 0) / 1000,
             file: '',
-            
           },
         }]
       };
 
-      if (suiteOptions.addFileAttribute === 'true') {
-        testCase.testcase[0]._attr.file = filepath;
+      if ((suiteOptions.addFileAttribute as string) === 'true') {
+        (testCase.testcase[0] as { _attr: Record<string, string | number> })._attr.file = filepath;
       }
 
-      if (tc.status === 'failed'|| tc.status === 'error') {
-        const failureMessages = options.noStackTrace === 'true' && tc.failureDetails ?
-            tc.failureDetails.map((detail: any) => detail.message) : tc.failureMessages;
+      const tcStatus = tc.status as string;
+      if (tcStatus === 'failed' || tcStatus === 'error') {
+        const failureDetails = tc.failureDetails as Array<{ message?: string }> | undefined;
+        const failureMessages = (options.noStackTrace as string) === 'true' && failureDetails ?
+            failureDetails.map((detail) => detail.message ?? '') : tc.failureMessages;
 
-        failureMessages.forEach((failure: any) => {
-          const tagName = tc.status === 'failed' ? 'failure': 'error'
+        failureMessages.forEach((failure: string) => {
+          const tagName = tcStatus === 'failed' ? 'failure' : 'error';
           testCase.testcase.push({
             [tagName]: stripAnsi(failure)
           });
@@ -205,11 +226,11 @@ export default (report: any, appDirectory: any, options: any): any => {
     });
 
     // Write stdout console output if available
-    if (suiteOptions.includeConsoleOutput === 'true' && suite.console && suite.console.length) {
+    if ((suiteOptions.includeConsoleOutput as string) === 'true' && suite.console && suite.console.length) {
       // Stringify the entire console object
       // Easier this way because formatting in a readable way is tough with XML
       // And this can be parsed more easily
-      const testSuiteConsole: any = {
+      const testSuiteConsole: XmlLeaf = {
         'system-out': {
           _cdata: JSON.stringify(suite.console, null, 2)
         }
@@ -219,20 +240,20 @@ export default (report: any, appDirectory: any, options: any): any => {
     }
 
     // Write short stdout console output if available
-    if (suiteOptions.includeShortConsoleOutput === 'true' && suite.console && suite.console.length) {
+    if ((suiteOptions.includeShortConsoleOutput as string) === 'true' && suite.console && suite.console.length) {
       // Extract and then Stringify the console message value
       // Easier this way because formatting in a readable way is tough with XML
       // And this can be parsed more easily
-      const testSuiteConsole: any = {
+      const testSuiteConsole: XmlLeaf = {
         'system-out': {
-          _cdata: JSON.stringify(suite.console.map((item: any) => item.message), null, 2)
+          _cdata: JSON.stringify(suite.console.map((item: LogEntry) => item.message), null, 2)
         }
       };
 
       testSuite.testsuite.push(testSuiteConsole);
     }
 
-    jsonResults.testsuites.push(testSuite as any);
+    jsonResults.testsuites.push(testSuite);
   });
 
   return jsonResults;

@@ -1,6 +1,7 @@
 import { failure } from "./failure";
+import type { TestCaseInput, XmlLeaf } from '../../types';
 
-export const testCase = (testResult: any): any => {
+export const testCase = (testResult: TestCaseInput): XmlLeaf => {
   let failures;
   const aTestCase = {
     _attr: {
@@ -10,17 +11,17 @@ export const testCase = (testResult: any): any => {
   }
 
   if (testResult.status === 'failed') {
-    failures = testResult.failureMessages.map(failure)
-    return {testCase: [aTestCase].concat(failures)}
+    failures = (testResult.failureMessages ?? []).map(failure)
+    return {testCase: [aTestCase as XmlLeaf].concat(failures)}
   } else if (testResult.status === 'pending' || testResult.status === 'skipped' || testResult.status === 'todo') {
     return {
-      testCase: [aTestCase].concat({
+      testCase: [aTestCase as XmlLeaf].concat({
         skipped: {
           _attr: {
             message: "Test skipped"
           },
         },
-      } as any),
+      }),
     };
   }
   return {testCase: aTestCase}

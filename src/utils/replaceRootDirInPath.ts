@@ -3,7 +3,7 @@
 import * as path from 'path';
 
 
-export const replaceRootDirInPath = (rootDir: string, filePath: string): any => {
+export const replaceRootDirInPath = (rootDir: string, filePath: string): string => {
     if (!/^<rootDir>/.test(filePath)) {
       return filePath;
     }
