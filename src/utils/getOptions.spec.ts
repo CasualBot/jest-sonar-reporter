@@ -70,13 +70,16 @@ describe('getUniqueOutputName', () => {
 });
 
 describe('replaceRootDirInOutput', () => {
+  const ROOT_DIR_REPORTS = '<rootDir>/reports';
+  const ROOT_DIR = '/project';
+
   it('returns the output unchanged when rootDir is null', () => {
-    expect(getOptions.replaceRootDirInOutput(null, '<rootDir>/reports')).toBe('<rootDir>/reports');
+    expect(getOptions.replaceRootDirInOutput(null, ROOT_DIR_REPORTS)).toBe(ROOT_DIR_REPORTS);
   });
 
   it('substitutes <rootDir> when rootDir is provided', () => {
-    expect(getOptions.replaceRootDirInOutput('/project', '<rootDir>/reports')).toBe(
-      path.resolve('/project', 'reports'),
+    expect(getOptions.replaceRootDirInOutput(ROOT_DIR, ROOT_DIR_REPORTS)).toBe(
+      path.resolve(ROOT_DIR, 'reports'),
     );
   });
 });

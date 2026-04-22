@@ -2,10 +2,16 @@ import * as path from 'path';
 import getOutputPath from './getOutputPath';
 import type { ReporterOptions } from '../types';
 
+const OUTPUT_DIR = 'coverage';
+const OUTPUT_NAME = 'jest-sonar.xml';
+const OUTPUT_FILE = 'reports/out.xml';
+const ROOT_DIR = '/project';
+const ROOT_DIR_REPORTS = '<rootDir>/reports';
+
 const baseOptions: ReporterOptions = {
   suiteName: 'jest tests',
-  outputDirectory: 'coverage',
-  outputName: 'jest-sonar.xml',
+  outputDirectory: OUTPUT_DIR,
+  outputName: OUTPUT_NAME,
   uniqueOutputName: false,
   classNameTemplate: '{classname} {title}',
   suiteNameTemplate: '{title}',
@@ -25,12 +31,12 @@ const baseOptions: ReporterOptions = {
 
 describe('getOutputPath', () => {
   it('joins outputDirectory with outputName when outputFile is not set', () => {
-    expect(getOutputPath(baseOptions, null)).toBe(path.join('coverage', 'jest-sonar.xml'));
+    expect(getOutputPath(baseOptions, null)).toBe(path.join(OUTPUT_DIR, OUTPUT_NAME));
   });
 
   it('uses outputFile verbatim when provided', () => {
-    const options: ReporterOptions = { ...baseOptions, outputFile: 'reports/out.xml' };
-    expect(getOutputPath(options, null)).toBe('reports/out.xml');
+    const options: ReporterOptions = { ...baseOptions, outputFile: OUTPUT_FILE };
+    expect(getOutputPath(options, null)).toBe(OUTPUT_FILE);
   });
 
   it('generates a unique output name when uniqueOutputName is "true"', () => {
@@ -40,13 +46,13 @@ describe('getOutputPath', () => {
   });
 
   it('replaces <rootDir> in outputDirectory using the jestRootDir argument', () => {
-    const options: ReporterOptions = { ...baseOptions, outputDirectory: '<rootDir>/reports' };
-    const result = getOutputPath(options, '/project');
-    expect(result).toBe(path.join(path.resolve('/project', 'reports'), 'jest-sonar.xml'));
+    const options: ReporterOptions = { ...baseOptions, outputDirectory: ROOT_DIR_REPORTS };
+    const result = getOutputPath(options, ROOT_DIR);
+    expect(result).toBe(path.join(path.resolve(ROOT_DIR, 'reports'), OUTPUT_NAME));
   });
 
   it('replaces <rootDir> in outputFile using the jestRootDir argument', () => {
-    const options: ReporterOptions = { ...baseOptions, outputFile: '<rootDir>/reports/out.xml' };
-    expect(getOutputPath(options, '/project')).toBe(path.resolve('/project', 'reports/out.xml'));
+    const options: ReporterOptions = { ...baseOptions, outputFile: `<rootDir>/${OUTPUT_FILE}` };
+    expect(getOutputPath(options, ROOT_DIR)).toBe(path.resolve(ROOT_DIR, OUTPUT_FILE));
   });
 });

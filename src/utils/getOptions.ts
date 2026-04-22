@@ -37,23 +37,21 @@ function getAppOptions(pathToResolve: string): Partial<ReporterOptions> {
     const pkgpath = path.join(pathToResolve, 'package.json');
 
     if (fs.existsSync(pkgpath)) {
-      let options: Partial<ReporterOptions> | undefined;
+      let options: Partial<ReporterOptions> = {};
 
       try {
         const pkg = JSON.parse(fs.readFileSync(pkgpath, 'utf8')) as Record<string, unknown>;
-        options = pkg?.['@casualbot/jest-sonar-reporter'] as Partial<ReporterOptions> | undefined;
+        const pkgOptions = pkg?.['@casualbot/jest-sonar-reporter'];
+        if (Object.prototype.toString.call(pkgOptions) === '[object Object]') {
+          options = pkgOptions as Partial<ReporterOptions>;
+        }
       } catch (error) {
         console.warn(`Unable to import package.json to get reporter options: ${error}`);
       }
 
-      if (Object.prototype.toString.call(options) !== '[object Object]') {
-        options = {};
-      }
-
-      return options ?? {};
-    } else {
-      pathToResolve = path.dirname(pathToResolve);
+      return options;
     }
+    pathToResolve = path.dirname(pathToResolve);
   }
 
   return {};
