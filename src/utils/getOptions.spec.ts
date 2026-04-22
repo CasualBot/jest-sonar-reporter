@@ -28,3 +28,84 @@ describe('getAppOptions', () => {
     expect(result).toEqual({});
   });
 });
+
+describe('getEnvOptions', () => {
+  const originalEnv = process.env;
+
+  beforeEach(() => {
+    process.env = { ...originalEnv };
+  });
+
+  afterAll(() => {
+    process.env = originalEnv;
+  });
+
+  it('returns an empty object when no known env vars are set', () => {
+    for (const name of Object.keys(process.env)) {
+      if (name.startsWith('JEST_')) {
+        delete process.env[name];
+      }
+    }
+    expect(getOptions.getEnvOptions()).toEqual({});
+  });
+
+  it('maps recognized env vars to reporter option keys', () => {
+    process.env.JEST_SUITE_NAME = 'my suite';
+    process.env.JEST_SONAR_OUTPUT_DIR = 'out-dir';
+    const result = getOptions.getEnvOptions() as Record<string, string>;
+    expect(result.suiteName).toBe('my suite');
+    expect(result.outputDirectory).toBe('out-dir');
+  });
+});
+
+describe('getUniqueOutputName', () => {
+  it('returns a filename with a uuid suffix', () => {
+    const name = getOptions.getUniqueOutputName();
+    expect(name).toMatch(/^jest-sonar-reporter-[0-9a-f-]+\.xml$/);
+  });
+
+  it('produces distinct names on repeated calls', () => {
+    expect(getOptions.getUniqueOutputName()).not.toBe(getOptions.getUniqueOutputName());
+  });
+});
+
+describe('replaceRootDirInOutput', () => {
+  it('returns the output unchanged when rootDir is null', () => {
+    expect(getOptions.replaceRootDirInOutput(null, '<rootDir>/reports')).toBe('<rootDir>/reports');
+  });
+
+  it('substitutes <rootDir> when rootDir is provided', () => {
+    expect(getOptions.replaceRootDirInOutput('/project', '<rootDir>/reports')).toBe(
+      path.resolve('/project', 'reports'),
+    );
+  });
+});
+
+describe('options', () => {
+  const originalEnv = process.env;
+
+  beforeEach(() => {
+    process.env = { ...originalEnv };
+    for (const name of Object.keys(process.env)) {
+      if (name.startsWith('JEST_')) {
+        delete process.env[name];
+      }
+    }
+  });
+
+  afterAll(() => {
+    process.env = originalEnv;
+  });
+
+  it('merges defaults with reporter options', () => {
+    const result = getOptions.options({ suiteName: 'custom suite' });
+    expect(result.suiteName).toBe('custom suite');
+    expect(result.outputName).toBe('jest-sonar.xml');
+  });
+
+  it('lets env vars override reporter options', () => {
+    process.env.JEST_SUITE_NAME = 'env suite';
+    const result = getOptions.options({ suiteName: 'reporter suite' });
+    expect(result.suiteName).toBe('env suite');
+  });
+});
