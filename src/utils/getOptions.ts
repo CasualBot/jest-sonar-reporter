@@ -1,24 +1,29 @@
 // Copied from https://raw.githubusercontent.com/jest-community/jest-junit/master/utils/getOptions.js
 import * as path from 'path';
 import * as fs from 'fs';
-import { v1 as uuid } from 'uuid';
+import { randomUUID } from 'crypto';
 import constants from '../constants';
 import { replaceRootDirInPath } from './replaceRootDirInPath';
+import type { ReporterOptions } from '../types';
 
-function getEnvOptions() {
-  const options: any = {};
-  const setupConf: any = constants;
+type EnvConfigMap = Record<string, keyof ReporterOptions>;
+type EnvOptions = Partial<Record<keyof ReporterOptions, string>>;
 
-  for (const name in setupConf.ENV_CONFIG_MAP) {
-    if (process.env[name]) {
-      options[setupConf.ENV_CONFIG_MAP[name] as any] = process.env[name];
+function getEnvOptions(): EnvOptions {
+  const options: EnvOptions = {};
+  const envConfigMap = constants.ENV_CONFIG_MAP as EnvConfigMap;
+
+  for (const name of Object.keys(envConfigMap)) {
+    const value = process.env[name];
+    if (value) {
+      options[envConfigMap[name]] = value;
     }
   }
 
   return options;
 }
 
-function getAppOptions(pathToResolve: any) {
+function getAppOptions(pathToResolve: string): Partial<ReporterOptions> {
   let traversing = true;
 
   // Get the root dir to detect when we reached the end of our search.
@@ -34,42 +39,43 @@ function getAppOptions(pathToResolve: any) {
     const pkgpath = path.join(pathToResolve, 'package.json');
 
     if (fs.existsSync(pkgpath)) {
-      let options;
+      let options: Partial<ReporterOptions> = {};
 
       try {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        options = require(pkgpath)?.['@casualbot/jest-sonar-reporter'];
+        const pkg = JSON.parse(fs.readFileSync(pkgpath, 'utf8')) as Record<string, unknown>;
+        const pkgOptions = pkg['@casualbot/jest-sonar-reporter'];
+        if (Object.prototype.toString.call(pkgOptions) === '[object Object]') {
+          options = pkgOptions as Partial<ReporterOptions>;
+        }
       } catch (error) {
         console.warn(`Unable to import package.json to get reporter options: ${error}`);
       }
 
-      if (Object.prototype.toString.call(options) !== '[object Object]') {
-        options = {};
-      }
-
       return options;
-    } else {
-      pathToResolve = path.dirname(pathToResolve);
     }
+    pathToResolve = path.dirname(pathToResolve);
   }
 
   return {};
 }
 
-function replaceRootDirInOutput(rootDir: any, output: any) {
+function replaceRootDirInOutput(rootDir: string | null, output: string): string {
   return rootDir !== null ? replaceRootDirInPath(rootDir, output) : output;
 }
 
-function getUniqueOutputName() {
-  return `jest-sonar-reporter-${uuid()}.xml`
+function getUniqueOutputName(): string {
+  return `jest-sonar-reporter-${randomUUID()}.xml`
 }
 
 export default {
-  options: (reporterOptions = {}) => {
-    return Object.assign({}, constants.DEFAULT_OPTIONS, reporterOptions, getAppOptions(process.cwd()), getEnvOptions());
-  },
-  getAppOptions: getAppOptions,
-  getEnvOptions: getEnvOptions,
-  replaceRootDirInOutput: replaceRootDirInOutput,
-  getUniqueOutputName: getUniqueOutputName
+  options: (reporterOptions: Partial<ReporterOptions> = {}): ReporterOptions => ({
+    ...constants.DEFAULT_OPTIONS,
+    ...reporterOptions,
+    ...getAppOptions(process.cwd()),
+    ...getEnvOptions(),
+  }) as ReporterOptions,
+  getAppOptions,
+  getEnvOptions,
+  replaceRootDirInOutput,
+  getUniqueOutputName,
 };

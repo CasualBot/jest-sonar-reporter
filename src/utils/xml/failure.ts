@@ -1,7 +1,9 @@
-export const failure = (message: string): any => {
-  // eslint-disable-next-line no-control-regex
-  const filteredMessage = message.replace(/([\u001b]\[.{1,2}m)/g, '');
-  const shortMessage = filteredMessage.replace(/[\n].*/g, '');
+import { stripVTControlCharacters } from 'util';
+import type { XmlLeaf } from '../../types';
+
+export const failure = (message: string): XmlLeaf => {
+  const filteredMessage = stripVTControlCharacters(message);
+  const shortMessage = filteredMessage.split('\n', 1)[0];
   return {
     failure: {
       _attr: {

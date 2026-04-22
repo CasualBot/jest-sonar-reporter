@@ -1,10 +1,16 @@
 import file from './xml/file';
+import type { BuildXmlReportInput, ReporterOptions, XmlLeaf } from '../types';
 
-export default (data: any, options: any = {}): any => {
-  const aTestExecution = [{_attr: {version: '1'}}]
-  const testResults = data.testResults.map((result: any) => { return file(result, options.relativePaths, options.projectRoot) })
+type BuildXmlReportOptions = Pick<ReporterOptions, 'relativePaths' | 'projectRoot' | 'formatForSonar56'>;
 
-  return options?.formatForSonar56
+export default (data: BuildXmlReportInput, options: boolean | Partial<BuildXmlReportOptions> = {}): XmlLeaf => {
+  const opts = typeof options === 'object' && options !== null ? options : {};
+  const aTestExecution: XmlLeaf[] = [{ _attr: { version: '1' } }];
+  const testResults = data.testResults.map((result) =>
+    file(result, opts.relativePaths, opts.projectRoot ?? null),
+  );
+
+  return opts.formatForSonar56
     ? { unitTest: aTestExecution.concat(testResults) }
     : { testExecutions: aTestExecution.concat(testResults) };
-}
+};
